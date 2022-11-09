@@ -1,24 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as Colyseus from "colyseus.js";
+import BasicRoom from "./layouts/BasicRoom";
+
+// const client = new Colyseus.Client("ws://192.168.1.252:2567");
+
+var host = window.location.host.replace(/:.*/, "");
+
+var client = new Colyseus.Client(`ws://${host}:2567`);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BasicRoom client={client} />
     </div>
   );
 }
