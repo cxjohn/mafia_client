@@ -3,7 +3,7 @@ import { useState } from "react";
 import ChatModal from "./components/ChatModal";
 import useDisclosure from "./hooks/useDisclosure";
 import BottomBar from "./layouts/BottomBar";
-import Phase from "./components/Phase";
+import Phase, { PhaseType } from "./components/Phase";
 import Header from "./layouts/Header";
 import JoinRoom from "./components/JoinRoom";
 import type { State } from "./types/State";
@@ -20,8 +20,7 @@ export default function App() {
   const [messages, setMessages] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [entered, setEntered] = useState(false);
-  const [phase, setPhase] = useState(0);
+  const [phase, setPhase] = useState<PhaseType>("LOBBY");
   const [sessionIDs, setSessionIDs] = useState<string[]>([]);
 
   async function createRoom(name: string) {
@@ -38,7 +37,7 @@ export default function App() {
       });
 
       room.onStateChange.once((state: State) => {
-        setEntered(state.entered);
+        // setEntered(state.entered);
       });
 
       room.onStateChange((state: State) => {
@@ -99,8 +98,8 @@ export default function App() {
 
   return (
     <div className="w-full min-h-screen bg-[#222] text-3xl text-white font-bold">
-      {!entered && <Header />}
-      {entered ? (
+      {!thisRoom && <Header />}
+      {thisRoom ? (
         <div className="pt-8 lg:pt-24">
           <div className="mx-auto max-w-md text-center">
             <div className="flex flex-col px-8">
@@ -109,6 +108,7 @@ export default function App() {
                 thisRoom={thisRoom}
                 sessionIDs={sessionIDs}
               />
+              {phase}
             </div>
           </div>
           <BottomBar
