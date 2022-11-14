@@ -1,13 +1,15 @@
+import Night from "./Night";
 import PlayerList from "./PlayerList";
 
-export type PhaseType =
-  | "LOBBY"
-  | "INTRODUCTION"
-  | "NIGHT"
-  | "NARRATIONMORNING"
-  | "VOTING"
-  | "NARRATIONLYNCHING"
-  | "CONCLUSION";
+export enum PhaseType {
+  LOBBY = "LOBBY",
+  INTRODUCTION = "INTRODUCTION",
+  NIGHT = "NIGHT",
+  NARRATIONMORNING = "NARRATIONMORNING",
+  VOTING = "VOTING",
+  NARRATIONLYNCHING = "NARRATIONLYNCHING",
+  CONCLUSION = "CONCLUSION",
+}
 
 type PhaseProps = {
   phase: PhaseType;
@@ -18,19 +20,19 @@ type PhaseProps = {
 
 export default function Phase({ phase, thisRoom, sessionIDs }: PhaseProps) {
   switch (phase) {
-    case "LOBBY":
+    case PhaseType.LOBBY:
       return <PlayerList thisRoom={thisRoom} sessionIDs={sessionIDs} />;
-    case "INTRODUCTION":
+    case PhaseType.INTRODUCTION:
       return <div>1</div>;
-    case "NIGHT":
-      return <div>2</div>;
-    case "NARRATIONMORNING":
+    case PhaseType.NIGHT:
+      return <Night />;
+    case PhaseType.NARRATIONMORNING:
       return <div>3</div>;
-    case "VOTING":
+    case PhaseType.VOTING:
       return <div>4</div>;
-    case "NARRATIONLYNCHING":
+    case PhaseType.NARRATIONLYNCHING:
       return <div>5</div>;
-    case "CONCLUSION":
+    case PhaseType.CONCLUSION:
       return <div>6</div>;
     default:
       return <div>phase error</div>;

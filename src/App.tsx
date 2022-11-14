@@ -1,7 +1,5 @@
 import * as Colyseus from "colyseus.js";
 import { useState } from "react";
-import ChatModal from "./components/ChatModal";
-import useDisclosure from "./hooks/useDisclosure";
 import BottomBar from "./layouts/BottomBar";
 import Phase, { PhaseType } from "./components/Phase";
 import Header from "./layouts/Header";
@@ -20,7 +18,7 @@ export default function App() {
   const [messages, setMessages] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [phase, setPhase] = useState<PhaseType>("LOBBY");
+  const [phase, setPhase] = useState<PhaseType>(PhaseType.LOBBY);
   const [sessionIDs, setSessionIDs] = useState<string[]>([]);
 
   async function createRoom(name: string) {
@@ -85,17 +83,6 @@ export default function App() {
     thisRoom?.send("nextPhase");
   };
 
-  const { isOpen, close: closeModal, open: openModal } = useDisclosure(false);
-
-  const handleOpenModal = () => {
-    openModal();
-    document.body.style.overflow = "hidden";
-  };
-  const handleCloseModal = () => {
-    document.body.style.overflow = "";
-    closeModal();
-  };
-
   return (
     <div className="w-full min-h-screen bg-[#222] text-3xl text-white font-bold">
       {!thisRoom && <Header />}
@@ -113,11 +100,6 @@ export default function App() {
           </div>
           <BottomBar
             handleNext={handleNext}
-            handleOpenModal={handleOpenModal}
-          />
-          <ChatModal
-            isOpen={isOpen}
-            handleCloseModal={handleCloseModal}
             message={message}
             messages={messages}
             setMessage={setMessage}
