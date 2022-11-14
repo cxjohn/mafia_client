@@ -1,11 +1,16 @@
-import { useState } from "react";
+type ChatProps = {
+  message: string;
+  messages: string[];
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+};
 
-export default function BasicRoom({
+export default function Chat({
   message,
   messages,
   setMessage,
   handleSubmit,
-}) {
+}: ChatProps) {
   return (
     <div>
       <form className="flex flex-col" onSubmit={handleSubmit}>
