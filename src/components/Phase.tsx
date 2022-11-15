@@ -6,13 +6,13 @@ import PlayerRoom from "./PlayerRoom";
 import Voting from "./Voting";
 
 export enum PhaseType {
-  LOBBY = "LOBBY",
-  INTRODUCTION = "INTRODUCTION",
-  NIGHT = "NIGHT",
-  NARRATIONMORNING = "NARRATIONMORNING",
-  VOTING = "VOTING",
-  NARRATIONLYNCHING = "NARRATIONLYNCHING",
-  CONCLUSION = "CONCLUSION",
+  LOBBY,
+  INTRODUCTION,
+  NIGHT,
+  NARRATIONMORNING,
+  VOTING,
+  NARRATIONLYNCHING,
+  CONCLUSION,
 }
 
 type PhaseProps = {
@@ -20,7 +20,8 @@ type PhaseProps = {
   //TODO: room type
   thisRoom: any;
   sessionIDs: string[];
-  time: number;
+  time?: number;
+  narration: string;
 };
 
 export default function Phase({
@@ -28,12 +29,13 @@ export default function Phase({
   thisRoom,
   sessionIDs,
   time,
+  narration,
 }: PhaseProps) {
   switch (phase) {
     case PhaseType.LOBBY:
       return <PlayerRoom thisRoom={thisRoom} sessionIDs={sessionIDs} />;
     case PhaseType.INTRODUCTION:
-      return <Introduction />;
+      return <Introduction narration={narration} />;
     case PhaseType.NIGHT:
       return <Night />;
     case PhaseType.NARRATIONMORNING:

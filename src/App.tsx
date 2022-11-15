@@ -22,6 +22,7 @@ export default function App() {
   const [phase, setPhase] = useState<PhaseType>(PhaseType.LOBBY);
   const [sessionIDs, setSessionIDs] = useState<string[]>([]);
   const [time, setTime] = useState<number>();
+  const [narration, setNarration] = useState("");
 
   async function createRoom(name: string) {
     try {
@@ -43,6 +44,7 @@ export default function App() {
       room.onStateChange((state: State) => {
         console.log("the room state has been updated:", state);
         setPhase(state.phase);
+        setNarration(state.narration);
       });
 
       room.state.players.onAdd = function (player: Player, sessionId: string) {
@@ -100,6 +102,7 @@ export default function App() {
                 thisRoom={thisRoom}
                 sessionIDs={sessionIDs}
                 time={time}
+                narration={narration}
               />
             </div>
           </div>

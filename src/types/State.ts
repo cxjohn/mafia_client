@@ -19,10 +19,8 @@ import { PhaseType } from "../components/Phase";
 export class State extends Schema {
   @type("number") public countdown!: number;
   @type("boolean") public entered!: boolean;
-  @type("string") public phase!: PhaseType;
-  @type("number") public phaseIndex!: number;
-  @type(["string"]) public phaseArr: ArraySchema<string> =
-    new ArraySchema<string>();
+  @type("number") public phase!: PhaseType;
   @type({ map: Player }) public players: MapSchema<Player> =
     new MapSchema<Player>();
+  @type("string") public narration!: string;
 }
