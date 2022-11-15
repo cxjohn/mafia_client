@@ -12,7 +12,7 @@ export default function PlayerList({ thisRoom, sessionIDs }: PlayerListProps) {
           return (
             <li
               className={`text-xl text-left list-decimal list-inside ${
-                thisRoom.sessionId === session && "text-sky-700"
+                thisRoom.sessionId === session ? "text-sky-700" : "text-white"
               }`}
               key={idx}
             >

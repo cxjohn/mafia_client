@@ -10,6 +10,8 @@ type ModalProps = {
   messages: string[];
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  thisRoom: any;
+  sessionIDs: string[];
 };
 
 export default function Modal({
@@ -20,6 +22,8 @@ export default function Modal({
   messages,
   setMessage,
   handleSubmit,
+  thisRoom,
+  sessionIDs,
 }: ModalProps) {
   return (
     <ModalComponent
@@ -38,6 +42,8 @@ export default function Modal({
             messages={messages}
             setMessage={setMessage}
             handleSubmit={handleSubmit}
+            thisRoom={thisRoom}
+            sessionIDs={sessionIDs}
           />
         )}
         {modal === "info" && <InfoModal handleCloseModal={handleCloseModal} />}

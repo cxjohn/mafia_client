@@ -8,6 +8,8 @@ type BottomBarProps = {
   messages: string[];
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  thisRoom: any;
+  sessionIDs: string[];
 };
 
 export default function BottomBar({
@@ -16,6 +18,8 @@ export default function BottomBar({
   messages,
   setMessage,
   handleSubmit,
+  thisRoom,
+  sessionIDs,
 }: BottomBarProps) {
   const [showButton, setShowButton] = useState(true);
   const [modal, setModal] = useState("");
@@ -68,6 +72,8 @@ export default function BottomBar({
         messages={messages}
         setMessage={setMessage}
         handleSubmit={handleSubmit}
+        thisRoom={thisRoom}
+        sessionIDs={sessionIDs}
       />
     </div>
   );

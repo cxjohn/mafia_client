@@ -6,6 +6,7 @@ import Header from "./layouts/Header";
 import JoinRoom from "./components/JoinRoom";
 import type { State } from "./types/State";
 import type { Player } from "./types/Player";
+import Time from "./components/Time";
 
 // const client = new Colyseus.Client("ws://192.168.1.252:2567");
 
@@ -20,6 +21,7 @@ export default function App() {
   const [message, setMessage] = useState("");
   const [phase, setPhase] = useState<PhaseType>(PhaseType.LOBBY);
   const [sessionIDs, setSessionIDs] = useState<string[]>([]);
+  const [time, setTime] = useState<number>();
 
   async function createRoom(name: string) {
     try {
@@ -58,6 +60,9 @@ export default function App() {
       room.state.players.onChange = (player: Player, key: string) => {
         console.log(player, "have changes at", key);
       };
+      room.state.listen("countdown", (time: number) => {
+        setTime(time);
+      });
     } catch (e) {
       console.error("join error", e);
     }
@@ -94,8 +99,8 @@ export default function App() {
                 phase={phase}
                 thisRoom={thisRoom}
                 sessionIDs={sessionIDs}
+                time={time}
               />
-              {phase}
             </div>
           </div>
           <BottomBar
@@ -104,6 +109,8 @@ export default function App() {
             messages={messages}
             setMessage={setMessage}
             handleSubmit={handleSubmit}
+            thisRoom={thisRoom}
+            sessionIDs={sessionIDs}
           />
         </div>
       ) : (
