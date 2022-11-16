@@ -17,10 +17,10 @@ import { Player } from "./Player";
 import { PhaseType } from "../components/Phase";
 
 export class State extends Schema {
+  @type("number") public minClients!: number;
   @type("number") public countdown!: number;
-  @type("boolean") public entered!: boolean;
   @type("number") public phase!: PhaseType;
+  @type("string") public narration!: string;
   @type({ map: Player }) public players: MapSchema<Player> =
     new MapSchema<Player>();
-  @type("string") public narration!: string;
 }

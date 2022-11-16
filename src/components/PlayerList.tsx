@@ -5,6 +5,17 @@ type PlayerListProps = {
 };
 
 export default function PlayerList({ thisRoom, sessionIDs }: PlayerListProps) {
+  //  thisRoom &&
+  //    Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
+  //      (session, idx) => {
+  //        return (
+  //          <li className="text-left list-decimal list-inside" key={idx}>
+  //            {session.name}
+  //          </li>
+  //        );
+  //      }
+  //    );
+
   return (
     <ol className="pt-8">
       {thisRoom &&

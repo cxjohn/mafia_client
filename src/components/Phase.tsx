@@ -1,9 +1,9 @@
-import Conclusion from "./Conclusion";
-import Introduction from "./Introduction";
-import NarrationMorning from "./NarrationMorning";
-import Night from "./Night";
-import PlayerRoom from "./PlayerRoom";
-import Voting from "./Voting";
+import Conclusion from "./Phases/Conclusion";
+import Introduction from "./Phases/Introduction";
+import NarrationMorning from "./Phases/NarrationMorning";
+import Night from "./Phases/Night";
+import PlayerRoom from "./Phases/Lobby";
+import Voting from "./Phases/Voting";
 
 export enum PhaseType {
   LOBBY,

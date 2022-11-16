@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../components/Modal";
 import useDisclosure from "../hooks/useDisclosure";
+import { PhaseType } from "../components/Phase";
 
 type BottomBarProps = {
+  phase: PhaseType;
   handleNext: () => void;
   message: string;
   messages: string[];
@@ -13,6 +15,7 @@ type BottomBarProps = {
 };
 
 export default function BottomBar({
+  phase,
   handleNext,
   message,
   messages,
@@ -22,11 +25,32 @@ export default function BottomBar({
   sessionIDs,
 }: BottomBarProps) {
   const [showButton, setShowButton] = useState(true);
+  const [buttonText, setButtonText] = useState("");
   const [modal, setModal] = useState("");
 
-  let buttonText = () => {
-    return "Next Room";
-  };
+  useEffect(() => {
+    if (phase === PhaseType.LOBBY) {
+      setButtonText("Start Game");
+      if (!thisRoom.state.players[thisRoom.sessionId]?.room_owner) {
+        setShowButton(false);
+      }
+    } else if (phase === PhaseType.INTRODUCTION) {
+      setShowButton(true);
+      setButtonText("OK");
+    } else if (phase === PhaseType.NIGHT) {
+      setShowButton(true);
+      setButtonText("Next Room");
+    } else if (phase === PhaseType.NARRATIONMORNING) {
+      setShowButton(true);
+      setButtonText("Skip to Vote");
+    } else if (phase === PhaseType.VOTING) {
+      setButtonText("This button will be hidden");
+    } else if (phase === PhaseType.NARRATIONLYNCHING) {
+      setButtonText("Next Room");
+    } else if (phase === PhaseType.CONCLUSION) {
+      setButtonText("Play Again");
+    }
+  }, [phase]);
 
   const { isOpen, close: closeModal, open: openModal } = useDisclosure(false);
 
@@ -48,7 +72,7 @@ export default function BottomBar({
             className="w-full max-w-md rounded bg-sky-700 p-4"
             onClick={() => handleNext()}
           >
-            {buttonText()}
+            {buttonText}
           </button>
         )}
         <button

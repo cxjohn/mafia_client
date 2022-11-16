@@ -10,7 +10,7 @@ export default function JoinRoom({
   setName,
 }: JoinRoomProps) {
   return (
-    <div className="mx-auto max-w-md text-center">
+    <div className="mx-auto max-w-lg text-center">
       <div className="pt-4 lg:pt-12 px-4">
         <form onSubmit={handleCreateOrJoin}>
           Enter your name:

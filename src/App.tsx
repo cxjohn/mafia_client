@@ -6,7 +6,6 @@ import Header from "./layouts/Header";
 import JoinRoom from "./components/JoinRoom";
 import type { State } from "./types/State";
 import type { Player } from "./types/Player";
-import Time from "./components/Time";
 
 // const client = new Colyseus.Client("ws://192.168.1.252:2567");
 
@@ -95,7 +94,7 @@ export default function App() {
       {!thisRoom && <Header />}
       {thisRoom ? (
         <div className="pt-8 lg:pt-24">
-          <div className="mx-auto max-w-md text-center">
+          <div className="mx-auto max-w-lg text-center">
             <div className="flex flex-col px-8">
               <Phase
                 phase={phase}
@@ -107,6 +106,7 @@ export default function App() {
             </div>
           </div>
           <BottomBar
+            phase={phase}
             handleNext={handleNext}
             message={message}
             messages={messages}
