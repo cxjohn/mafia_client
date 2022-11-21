@@ -14,9 +14,15 @@ import {
   DataChange,
 } from "@colyseus/schema";
 
+export enum Role {
+  MAFIA = 0,
+  TOWNSPERSON = 1,
+}
+
 export class Player extends Schema {
   @type("string") public name!: string;
   @type("boolean") public alive!: boolean;
+  @type("number") public role!: Role;
   @type("boolean") public room_owner!: boolean;
   @type("boolean") public confirmed!: boolean;
 }
