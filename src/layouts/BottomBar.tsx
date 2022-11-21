@@ -6,33 +6,47 @@ import { PhaseType } from "../components/Phase";
 type BottomBarProps = {
   phase: PhaseType;
   handleNext: () => void;
+  buttonClicked: boolean;
   message: string;
   messages: string[];
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   thisRoom: any;
   sessionIDs: string[];
+  confirmedCount: number;
 };
 
 export default function BottomBar({
   phase,
   handleNext,
+  buttonClicked,
   message,
   messages,
   setMessage,
   handleSubmit,
   thisRoom,
   sessionIDs,
+  confirmedCount,
 }: BottomBarProps) {
   const [showButton, setShowButton] = useState(true);
   const [buttonText, setButtonText] = useState("");
+  const [buttonWaitingText, setButtonWaitingText] = useState("");
   const [modal, setModal] = useState("");
 
   useEffect(() => {
     if (phase === PhaseType.LOBBY) {
-      setButtonText("Start Game");
+      let deficit = 0;
+      if (sessionIDs.length < thisRoom.state.minClients) {
+        deficit = thisRoom.state.minClients - sessionIDs.length;
+        setButtonText(`Need ${deficit} players...`);
+      } else {
+        setButtonText("Start Game");
+      }
+
       if (!thisRoom.state.players[thisRoom.sessionId]?.room_owner) {
-        setShowButton(false);
+        //TODO: change to false once logic for lobby phase is changed on backend
+        //setShowButton(false);
+        setShowButton(true);
       }
     } else if (phase === PhaseType.INTRODUCTION) {
       setShowButton(true);
@@ -50,7 +64,24 @@ export default function BottomBar({
     } else if (phase === PhaseType.CONCLUSION) {
       setButtonText("Play Again");
     }
-  }, [phase]);
+  }, [phase, thisRoom.state.players, thisRoom.sessionId, sessionIDs.length]);
+
+  useEffect(() => {
+    setButtonWaitingText(
+      `Waiting for ${sessionIDs.length - confirmedCount} others...`
+    );
+    if (sessionIDs.length - confirmedCount === 1) {
+      let name = "";
+      for (let player of thisRoom.state.players.values()) {
+        if (player.confirmed === false) {
+          name = player.name;
+        }
+      }
+      setButtonWaitingText(`Waiting for ${name}`);
+    }
+  }, [confirmedCount, sessionIDs.length]);
+
+  console.log("thisRoom.state.players.size", thisRoom.state.players.size);
 
   const { isOpen, close: closeModal, open: openModal } = useDisclosure(false);
 
@@ -72,7 +103,7 @@ export default function BottomBar({
             className="w-full max-w-md rounded bg-sky-700 p-4"
             onClick={() => handleNext()}
           >
-            {buttonText}
+            {buttonClicked ? buttonWaitingText : buttonText}
           </button>
         )}
         <button

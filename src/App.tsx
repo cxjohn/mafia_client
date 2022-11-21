@@ -1,5 +1,5 @@
 import * as Colyseus from "colyseus.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BottomBar from "./layouts/BottomBar";
 import Phase, { PhaseType } from "./components/Phase";
 import Header from "./layouts/Header";
@@ -22,6 +22,8 @@ export default function App() {
   const [sessionIDs, setSessionIDs] = useState<string[]>([]);
   const [time, setTime] = useState<number>();
   const [narration, setNarration] = useState("");
+  const [buttonClicked, setButtonClicked] = useState(false);
+  const [confirmedCount, setConfirmedCount] = useState(0);
 
   async function createRoom(name: string) {
     try {
@@ -42,6 +44,12 @@ export default function App() {
 
       room.onStateChange((state: State) => {
         console.log("the room state has been updated:", state);
+        let count = 0;
+        state.players.forEach((player) => {
+          if (player.confirmed) count++;
+        });
+        console.log("count", count);
+        setConfirmedCount(count);
         setPhase(state.phase);
         setNarration(state.narration);
       });
@@ -69,6 +77,10 @@ export default function App() {
     }
   }
 
+  useEffect(() => {
+    setButtonClicked(false);
+  }, [phase]);
+
   const handleCreateOrJoin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     createRoom(name);
@@ -85,6 +97,7 @@ export default function App() {
 
   const handleNext = () => {
     //TODO: room type
+    setButtonClicked(true);
     // @ts-ignore
     thisRoom?.send("nextPhase");
   };
@@ -108,12 +121,14 @@ export default function App() {
           <BottomBar
             phase={phase}
             handleNext={handleNext}
+            buttonClicked={buttonClicked}
             message={message}
             messages={messages}
             setMessage={setMessage}
             handleSubmit={handleSubmit}
             thisRoom={thisRoom}
             sessionIDs={sessionIDs}
+            confirmedCount={confirmedCount}
           />
         </div>
       ) : (
