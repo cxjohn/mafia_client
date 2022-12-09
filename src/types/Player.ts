@@ -25,4 +25,5 @@ export class Player extends Schema {
   @type("number") public role!: Role;
   @type("boolean") public room_owner!: boolean;
   @type("boolean") public confirmed!: boolean;
+  @type("boolean") public voted!: boolean;
 }

@@ -39,7 +39,7 @@ export default function ChatModal({
           />
           <div>
             <input
-              className="bg-white rounded p-2 cursor-pointer"
+              className="bg-white text-black rounded p-2 cursor-pointer"
               type="submit"
             />
           </div>

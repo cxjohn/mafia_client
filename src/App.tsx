@@ -24,6 +24,7 @@ export default function App() {
   const [narration, setNarration] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
   const [confirmedCount, setConfirmedCount] = useState(0);
+  const [voteTarget, setVoteTarget] = useState<string>();
 
   async function createRoom(name: string) {
     try {
@@ -101,6 +102,12 @@ export default function App() {
     // @ts-ignore
     thisRoom?.send("nextPhase");
   };
+  const handleVote = (client: string, target: string) => {
+    //TODO: room type
+    console.log("vote", typeof client, client, typeof target, target);
+    // @ts-ignore
+    thisRoom?.send("voteForLynch", (client, target));
+  };
 
   return (
     <div className="w-full min-h-screen bg-[#222] text-3xl text-white font-bold">
@@ -115,6 +122,7 @@ export default function App() {
                 sessionIDs={sessionIDs}
                 time={time}
                 narration={narration}
+                handleVote={handleVote}
               />
             </div>
           </div>

@@ -11,7 +11,9 @@ export default function PlayerRoom({ thisRoom, sessionIDs }: PlayerRoomProps) {
   return (
     <>
       <TitleText text="Playas Room" />
-      <PlayerList thisRoom={thisRoom} sessionIDs={sessionIDs} />
+      <div className="pt-8">
+        <PlayerList thisRoom={thisRoom} sessionIDs={sessionIDs} />
+      </div>
     </>
   );
 }

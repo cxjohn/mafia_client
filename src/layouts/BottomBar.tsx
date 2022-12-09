@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import Modal from "../components/Modal";
+import InfoModal from "../components/InfoModal";
+import CModal from "../components/CModal";
 import useDisclosure from "../hooks/useDisclosure";
 import { PhaseType } from "../components/Phase";
 
@@ -83,16 +84,25 @@ export default function BottomBar({
 
   console.log("thisRoom.state.players.size", thisRoom.state.players.size);
 
-  const { isOpen, close: closeModal, open: openModal } = useDisclosure(false);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
-  const handleOpenModal = (modal: any) => {
-    setModal(modal);
-    openModal();
+  const handleOpenChatModal = () => {
+    setIsChatModalOpen(true);
     document.body.style.overflow = "hidden";
   };
-  const handleCloseModal = () => {
+  const handleOpenInfoModal = () => {
+    setIsInfoModalOpen(true);
+
+    document.body.style.overflow = "hidden";
+  };
+  const handleCloseChatModal = () => {
     document.body.style.overflow = "";
-    closeModal();
+    setIsChatModalOpen(false);
+  };
+  const handleCloseInfoModal = () => {
+    document.body.style.overflow = "";
+    setIsInfoModalOpen(false);
   };
 
   return (
@@ -108,21 +118,27 @@ export default function BottomBar({
         )}
         <button
           className="absolute -top-12 right-0 bg-black rounded-tl-xl p-2"
-          onClick={() => handleOpenModal("chat")}
+          onClick={() => handleOpenChatModal()}
         >
           <img className="w-8" src="./images/chat.webp" alt="chat" />
         </button>
         <button
           className="absolute -top-12 left-0 bg-black rounded-tr-xl p-2"
-          onClick={() => handleOpenModal("info")}
+          onClick={() => handleOpenInfoModal()}
         >
           <img className="w-8" src="./images/info.png" alt="chat" />
         </button>
       </div>
-      <Modal
-        isOpen={isOpen}
+      <InfoModal
+        isOpen={isInfoModalOpen}
+        handleCloseModal={handleCloseInfoModal}
+        thisRoom={thisRoom}
+        sessionIDs={sessionIDs}
+      />
+      <CModal
+        isOpen={isChatModalOpen}
         modal={modal}
-        handleCloseModal={handleCloseModal}
+        handleCloseModal={handleCloseChatModal}
         message={message}
         messages={messages}
         setMessage={setMessage}

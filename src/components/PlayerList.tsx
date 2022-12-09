@@ -17,13 +17,15 @@ export default function PlayerList({ thisRoom, sessionIDs }: PlayerListProps) {
   //    );
 
   return (
-    <ol className="pt-8">
+    <ol>
       {thisRoom &&
         sessionIDs.map((session, idx) => {
           return (
             <li
               className={`text-xl text-left list-decimal list-inside ${
                 thisRoom.sessionId === session ? "text-sky-700" : "text-white"
+              } ${
+                thisRoom.state.players[session]?.alive ? "" : "line-through"
               }`}
               key={idx}
             >
