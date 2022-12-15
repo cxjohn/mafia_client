@@ -1,6 +1,13 @@
+import WhackList from "../WhackList";
 import TitleText from "../TitleText";
 
-export default function Night() {
+type NightProps = {
+  //TODO: room type
+  thisRoom: any;
+  sessionIDs: string[];
+};
+
+export default function Night({ thisRoom, sessionIDs }: NightProps) {
   return (
     <>
       <TitleText text="Night has fallen..." />
@@ -9,10 +16,16 @@ export default function Night() {
       <hr />
 
       <div className="py-8">
-        <p>Focus your attention to your screen.</p>
-        <p>Hide the contents of your screen.</p>
-        <p>Tap your phone occasionally.</p>
-        <p>Pretend to scroll occasionally.</p>
+        {thisRoom.state.players[thisRoom.sessionId]?.role === 0 ? (
+          <WhackList thisRoom={thisRoom} sessionIDs={sessionIDs} />
+        ) : (
+          <>
+            <p>Focus your attention to your screen.</p>
+            <p>Hide the contents of your screen.</p>
+            <p>Tap your phone occasionally.</p>
+            <p>Pretend to scroll occasionally.</p>
+          </>
+        )}
       </div>
     </>
   );

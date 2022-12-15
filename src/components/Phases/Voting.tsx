@@ -5,24 +5,15 @@ type VotingProps = {
   //TODO: room type
   thisRoom: any;
   sessionIDs: string[];
-  handleVote: (client: string, target: string) => void;
 };
 
-export default function Voting({
-  thisRoom,
-  sessionIDs,
-  handleVote,
-}: VotingProps) {
+export default function Voting({ thisRoom, sessionIDs }: VotingProps) {
   return (
     <>
       <TitleText text="No more talking!" />
       <div>
         <p>Place a vote to kill someone now</p>
-        <VoteList
-          thisRoom={thisRoom}
-          sessionIDs={sessionIDs}
-          handleVote={handleVote}
-        />
+        <VoteList thisRoom={thisRoom} sessionIDs={sessionIDs} />
 
         <p>
           To kill nobody, everyone must receive a <strong>single vote</strong>

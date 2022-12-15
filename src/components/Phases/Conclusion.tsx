@@ -1,22 +1,24 @@
-export default function Conclusion() {
-  return (
-    <>
-      <div className="win-lose">
-        <h1 className="win good-colour">You win!</h1>
-        <h1 className="lose bad-colour">You lose!</h1>
-      </div>
-      <div className="death">
-        <p>The people with the most votes were executed.</p>
-      </div>
+import { useState, useEffect } from "react";
 
-      <div className="event-log">
-        <h2>Event log</h2>
-      </div>
-      <div>
-        <a className="restart only-host btn btn-primary">Restart Game</a>
-        <a className="play-again not-host btn btn-primary">Play Again</a>
-        <a className="leave btn btn-danger">Leave Game</a>
-      </div>
-    </>
-  );
+type ConclusionProps = {
+  //TODO: room type
+  thisRoom: any;
+  sessionIDs: string[];
+};
+
+export default function Conclusion({ thisRoom, sessionIDs }: ConclusionProps) {
+  const [mafiaWin, setMafiaWin] = useState(false);
+
+  useEffect(() => {
+    {
+      thisRoom &&
+        thisRoom.state.players["$items"].forEach((player: any) => {
+          if (player.role === 0 && player.alive) {
+            setMafiaWin(true);
+          }
+        });
+    }
+  }, [thisRoom]);
+
+  return <div>{mafiaWin ? "Mafia" : "Townspeople"} win!</div>;
 }

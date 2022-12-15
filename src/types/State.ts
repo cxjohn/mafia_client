@@ -21,6 +21,8 @@ export class State extends Schema {
   @type("number") public countdown!: number;
   @type("number") public phase!: PhaseType;
   @type("string") public narration!: string;
+  @type("string") public id!: string;
+  @type("string") public sessionId!: string;
   @type({ map: Player }) public players: MapSchema<Player> =
     new MapSchema<Player>();
 }

@@ -1,23 +1,24 @@
 import TitleText from "../TitleText";
 
+enum Role {
+  "Mafia",
+  "Townsperson",
+}
+
 type IntroProps = {
   narration: string;
   thisRoom: any;
-  sessionIDs: string[];
 };
 
-export default function Introduction({
-  narration,
-  thisRoom,
-  sessionIDs,
-}: IntroProps) {
+export default function Introduction({ narration, thisRoom }: IntroProps) {
   return (
     <>
       <TitleText text="Mafia!" />
       <p>{narration}</p>
       {console.log("thisRoom", thisRoom)}
       <p>
-        role: {thisRoom && thisRoom.state.players[thisRoom.sessionId]?.role}
+        You are a{" "}
+        {Role[thisRoom && thisRoom.state.players[thisRoom.sessionId]?.role]}
       </p>
     </>
   );

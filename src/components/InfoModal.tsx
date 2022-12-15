@@ -28,7 +28,7 @@ export default function InfoModal({
   sessionIDs,
 }: ModalProps) {
   const [mafiaCount, setMafiaCount] = useState(0);
-  const [townieCount, setTownieCount] = useState(0);
+  const [townspersonCount, setTownspersonCount] = useState(0);
 
   const countRoles = (role: number) => {
     let count = 0;
@@ -40,9 +40,14 @@ export default function InfoModal({
     return count;
   };
 
+  const handleDispose = () => {
+    // @ts-ignore
+    thisRoom?.send("kill");
+  };
+
   useEffect(() => {
     setMafiaCount(countRoles(0));
-    setTownieCount(countRoles(1));
+    setTownspersonCount(countRoles(1));
   }, [thisRoom.state.players, countRoles]);
 
   return (
@@ -70,7 +75,7 @@ export default function InfoModal({
                 </div>
                 <div className="flex-col">
                   <div>townsperson</div>
-                  <div>x{townieCount}</div>
+                  <div>x{townspersonCount}</div>
                 </div>
               </div>
 
@@ -82,6 +87,12 @@ export default function InfoModal({
                 <p>The Mafia win when all the Townspeople are dead</p>
               </div>
             </div>
+            <button
+              onClick={handleDispose}
+              className="mt-24 text-red-600 text-xs"
+            >
+              Please don't click this
+            </button>
           </div>
         </div>
       )}

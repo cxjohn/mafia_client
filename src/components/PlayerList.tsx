@@ -18,7 +18,7 @@ export default function PlayerList({ thisRoom, sessionIDs }: PlayerListProps) {
 
   return (
     <ol>
-      {thisRoom &&
+      {/* {thisRoom &&
         sessionIDs.map((session, idx) => {
           return (
             <li
@@ -32,7 +32,17 @@ export default function PlayerList({ thisRoom, sessionIDs }: PlayerListProps) {
               {thisRoom.state.players[session]?.name}
             </li>
           );
-        })}
+        })} */}
+      {thisRoom &&
+        Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
+          (session, idx) => {
+            return (
+              <li className="text-left list-decimal list-inside" key={idx}>
+                {session.name}
+              </li>
+            );
+          }
+        )}
     </ol>
   );
 }

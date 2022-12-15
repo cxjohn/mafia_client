@@ -26,4 +26,5 @@ export class Player extends Schema {
   @type("boolean") public room_owner!: boolean;
   @type("boolean") public confirmed!: boolean;
   @type("boolean") public voted!: boolean;
+  @type("boolean") public connected!: boolean;
 }

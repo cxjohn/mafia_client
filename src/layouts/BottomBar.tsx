@@ -14,6 +14,7 @@ type BottomBarProps = {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   thisRoom: any;
   sessionIDs: string[];
+  aliveCount: number;
   confirmedCount: number;
 };
 
@@ -27,16 +28,19 @@ export default function BottomBar({
   handleSubmit,
   thisRoom,
   sessionIDs,
+  aliveCount,
   confirmedCount,
 }: BottomBarProps) {
   const [showButton, setShowButton] = useState(true);
   const [buttonText, setButtonText] = useState("");
   const [buttonWaitingText, setButtonWaitingText] = useState("");
   const [modal, setModal] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   useEffect(() => {
     if (phase === PhaseType.LOBBY) {
       let deficit = 0;
+      setShowButton(true);
       if (sessionIDs.length < thisRoom.state.minClients) {
         deficit = thisRoom.state.minClients - sessionIDs.length;
         setButtonText(`Need ${deficit} players...`);
@@ -45,22 +49,25 @@ export default function BottomBar({
       }
 
       if (!thisRoom.state.players[thisRoom.sessionId]?.room_owner) {
-        //TODO: change to false once logic for lobby phase is changed on backend
-        //setShowButton(false);
-        setShowButton(true);
+        setShowButton(false);
       }
     } else if (phase === PhaseType.INTRODUCTION) {
       setShowButton(true);
       setButtonText("OK");
     } else if (phase === PhaseType.NIGHT) {
-      setShowButton(true);
-      setButtonText("Next Room");
+      setIsButtonDisabled(true);
+
+      setButtonText("Waiting for morning");
     } else if (phase === PhaseType.NARRATIONMORNING) {
+      setIsButtonDisabled(false);
+
       setShowButton(true);
       setButtonText("Skip to Vote");
     } else if (phase === PhaseType.VOTING) {
-      setButtonText("This button will be hidden");
+      setIsButtonDisabled(true);
+      setButtonText("Vote");
     } else if (phase === PhaseType.NARRATIONLYNCHING) {
+      setIsButtonDisabled(false);
       setButtonText("Next Room");
     } else if (phase === PhaseType.CONCLUSION) {
       setButtonText("Play Again");
@@ -69,9 +76,9 @@ export default function BottomBar({
 
   useEffect(() => {
     setButtonWaitingText(
-      `Waiting for ${sessionIDs.length - confirmedCount} others...`
+      `Waiting for ${aliveCount - confirmedCount} others...`
     );
-    if (sessionIDs.length - confirmedCount === 1) {
+    if (aliveCount - confirmedCount === 1) {
       let name = "";
       for (let player of thisRoom.state.players.values()) {
         if (player.confirmed === false) {
@@ -80,9 +87,10 @@ export default function BottomBar({
       }
       setButtonWaitingText(`Waiting for ${name}`);
     }
-  }, [confirmedCount, sessionIDs.length]);
+  }, [confirmedCount, aliveCount]);
 
   console.log("thisRoom.state.players.size", thisRoom.state.players.size);
+  console.log("thisRoom", thisRoom);
 
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
@@ -110,8 +118,11 @@ export default function BottomBar({
       <div className="flex justify-center align-baseline">
         {showButton && (
           <button
-            className="w-full max-w-md rounded bg-sky-700 p-4"
+            className={`w-full max-w-md rounded p-4 ${
+              isButtonDisabled ? "bg-gray-800" : "bg-sky-700"
+            }`}
             onClick={() => handleNext()}
+            disabled={isButtonDisabled}
           >
             {buttonClicked ? buttonWaitingText : buttonText}
           </button>

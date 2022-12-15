@@ -1,30 +1,26 @@
-type VoteListProps = {
+type WhackListProps = {
   //TODO: room type
   thisRoom: any;
   sessionIDs: string[];
 };
 
-export default function VoteList({ thisRoom, sessionIDs }: VoteListProps) {
-  const handleVote = (client: string, target: string) => {
+export default function WhackList({ thisRoom, sessionIDs }: WhackListProps) {
+  const handleWhack = (client: string, target: string) => {
     //TODO: room type
     // @ts-ignore
-    thisRoom?.send("voteForLynch", (client, target));
+    thisRoom?.send("voteForWhack", (client, target));
   };
   return (
     <ul className="my-8">
       {thisRoom &&
         Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
           (session, idx) => {
-            if (
-              Object.keys(Object.fromEntries(thisRoom.state.players))[idx] !==
-                thisRoom.sessionId &&
-              session.alive
-            )
+            if (session.role !== 0 && session.alive)
               return (
                 <li key={idx}>
                   <button
                     onClick={() =>
-                      handleVote(
+                      handleWhack(
                         thisRoom.sessionId,
                         Object.keys(Object.fromEntries(thisRoom.state.players))[
                           idx
