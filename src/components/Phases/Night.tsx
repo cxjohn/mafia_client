@@ -4,10 +4,9 @@ import TitleText from "../TitleText";
 type NightProps = {
   //TODO: room type
   thisRoom: any;
-  sessionIDs: string[];
 };
 
-export default function Night({ thisRoom, sessionIDs }: NightProps) {
+export default function Night({ thisRoom }: NightProps) {
   return (
     <>
       <TitleText text="Night has fallen..." />
@@ -17,7 +16,7 @@ export default function Night({ thisRoom, sessionIDs }: NightProps) {
 
       <div className="py-8">
         {thisRoom.state.players[thisRoom.sessionId]?.role === 0 ? (
-          <WhackList thisRoom={thisRoom} sessionIDs={sessionIDs} />
+          <WhackList thisRoom={thisRoom} />
         ) : (
           <>
             <p>Focus your attention to your screen.</p>

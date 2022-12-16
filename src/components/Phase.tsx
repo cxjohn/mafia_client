@@ -19,7 +19,6 @@ type PhaseProps = {
   phase: PhaseType;
   //TODO: room type
   thisRoom: any;
-  sessionIDs: string[];
   time?: number;
   narration: string;
 };
@@ -27,25 +26,24 @@ type PhaseProps = {
 export default function Phase({
   phase,
   thisRoom,
-  sessionIDs,
   time,
   narration,
 }: PhaseProps) {
   switch (phase) {
     case PhaseType.LOBBY:
-      return <PlayerRoom thisRoom={thisRoom} sessionIDs={sessionIDs} />;
+      return <PlayerRoom thisRoom={thisRoom} />;
     case PhaseType.INTRODUCTION:
       return <Introduction narration={narration} thisRoom={thisRoom} />;
     case PhaseType.NIGHT:
-      return <Night thisRoom={thisRoom} sessionIDs={sessionIDs} />;
+      return <Night thisRoom={thisRoom} />;
     case PhaseType.NARRATIONMORNING:
       return <NarrationMorning time={time} />;
     case PhaseType.VOTING:
-      return <Voting thisRoom={thisRoom} sessionIDs={sessionIDs} />;
+      return <Voting thisRoom={thisRoom} />;
     case PhaseType.NARRATIONLYNCHING:
       return <div>Narration Lynching</div>;
     case PhaseType.CONCLUSION:
-      return <Conclusion thisRoom={thisRoom} sessionIDs={sessionIDs} />;
+      return <Conclusion thisRoom={thisRoom} />;
     default:
       return <div>phase error</div>;
   }

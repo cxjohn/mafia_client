@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import InfoModal from "../components/InfoModal";
 import CModal from "../components/CModal";
-import useDisclosure from "../hooks/useDisclosure";
 import { PhaseType } from "../components/Phase";
 
 type BottomBarProps = {
@@ -13,7 +12,6 @@ type BottomBarProps = {
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   thisRoom: any;
-  sessionIDs: string[];
   aliveCount: number;
   confirmedCount: number;
 };
@@ -27,22 +25,25 @@ export default function BottomBar({
   setMessage,
   handleSubmit,
   thisRoom,
-  sessionIDs,
   aliveCount,
   confirmedCount,
 }: BottomBarProps) {
   const [showButton, setShowButton] = useState(true);
   const [buttonText, setButtonText] = useState("");
   const [buttonWaitingText, setButtonWaitingText] = useState("");
-  const [modal, setModal] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   useEffect(() => {
     if (phase === PhaseType.LOBBY) {
       let deficit = 0;
       setShowButton(true);
-      if (sessionIDs.length < thisRoom.state.minClients) {
-        deficit = thisRoom.state.minClients - sessionIDs.length;
+      if (
+        Object.keys(Object.fromEntries(thisRoom.state.players)).length <
+        thisRoom.state.minClients
+      ) {
+        deficit =
+          thisRoom.state.minClients -
+          Object.keys(Object.fromEntries(thisRoom.state.players)).length;
         setButtonText(`Need ${deficit} players...`);
       } else {
         setButtonText("Start Game");
@@ -72,7 +73,13 @@ export default function BottomBar({
     } else if (phase === PhaseType.CONCLUSION) {
       setButtonText("Play Again");
     }
-  }, [phase, thisRoom.state.players, thisRoom.sessionId, sessionIDs.length]);
+  }, [
+    phase,
+    thisRoom.state.players,
+    thisRoom.sessionId,
+    Object.keys(Object.fromEntries(thisRoom.state.players)),
+    thisRoom.state.minClients,
+  ]);
 
   useEffect(() => {
     setButtonWaitingText(
@@ -81,16 +88,13 @@ export default function BottomBar({
     if (aliveCount - confirmedCount === 1) {
       let name = "";
       for (let player of thisRoom.state.players.values()) {
-        if (player.confirmed === false) {
+        if (player.confirmed === false && player.alive) {
           name = player.name;
         }
       }
       setButtonWaitingText(`Waiting for ${name}`);
     }
-  }, [confirmedCount, aliveCount]);
-
-  console.log("thisRoom.state.players.size", thisRoom.state.players.size);
-  console.log("thisRoom", thisRoom);
+  }, [confirmedCount, aliveCount, thisRoom.state.players]);
 
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
@@ -137,25 +141,22 @@ export default function BottomBar({
           className="absolute -top-12 left-0 bg-black rounded-tr-xl p-2"
           onClick={() => handleOpenInfoModal()}
         >
-          <img className="w-8" src="./images/info.png" alt="chat" />
+          <img className="w-8" src="./images/info.png" alt="info" />
         </button>
       </div>
       <InfoModal
         isOpen={isInfoModalOpen}
         handleCloseModal={handleCloseInfoModal}
         thisRoom={thisRoom}
-        sessionIDs={sessionIDs}
       />
       <CModal
         isOpen={isChatModalOpen}
-        modal={modal}
         handleCloseModal={handleCloseChatModal}
         message={message}
         messages={messages}
         setMessage={setMessage}
         handleSubmit={handleSubmit}
         thisRoom={thisRoom}
-        sessionIDs={sessionIDs}
       />
     </div>
   );

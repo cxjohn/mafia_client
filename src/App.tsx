@@ -20,13 +20,11 @@ export default function App() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [phase, setPhase] = useState<PhaseType>(PhaseType.LOBBY);
-  const [sessionIDs, setSessionIDs] = useState<string[]>([]);
   const [time, setTime] = useState<number>();
   const [narration, setNarration] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
   const [aliveCount, setAliveCount] = useState(0);
   const [confirmedCount, setConfirmedCount] = useState(0);
-  const [voteTarget, setVoteTarget] = useState<string>();
 
   async function createRoom(name: string) {
     try {
@@ -51,28 +49,18 @@ export default function App() {
         state.players.forEach((player) => {
           if (player.alive) alive++;
         });
-        console.log("alive", alive);
         setAliveCount(alive);
         let count = 0;
         state.players.forEach((player) => {
           if (player.confirmed) count++;
         });
-        console.log("count", count);
         setConfirmedCount(count);
         setPhase(state.phase);
         setNarration(state.narration);
       });
 
       room.state.players.onAdd = function (player: Player, sessionId: string) {
-        setSessionIDs((sessionIds) => [...sessionIds, sessionId]);
         console.log("player added", player, sessionId);
-      };
-
-      room.state.players.onRemove = function (
-        player: Player,
-        sessionId: string
-      ) {
-        setSessionIDs((oldIDs) => oldIDs.filter((id) => id !== sessionId));
       };
 
       room.state.players.onChange = (player: Player, key: string) => {
@@ -120,13 +108,11 @@ export default function App() {
         state.players.forEach((player) => {
           if (player.alive) alive++;
         });
-        console.log("alive", alive);
         setAliveCount(alive);
         let count = 0;
         state.players.forEach((player) => {
           if (player.confirmed) count++;
         });
-        console.log("count", count);
         setConfirmedCount(count);
         setPhase(state.phase);
         setNarration(state.narration);
@@ -185,14 +171,20 @@ export default function App() {
                 ? "fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-60 z-10"
                 : ""
             }`}
-          ></div>
+          >
+            {/* @ts-ignore */}
+            {thisRoom && !thisRoom.state.players[thisRoom.sessionId]?.alive ? (
+              <div className="absolute bottom-1/2 text-3xl text-white font-bold w-full text-center">
+                u r ded
+              </div>
+            ) : null}
+          </div>
           <div className="pt-8 lg:pt-24">
             <div className="mx-auto max-w-lg text-center">
               <div className="flex flex-col px-8">
                 <Phase
                   phase={phase}
                   thisRoom={thisRoom}
-                  sessionIDs={sessionIDs}
                   time={time}
                   narration={narration}
                 />
@@ -207,21 +199,18 @@ export default function App() {
               setMessage={setMessage}
               handleSubmit={handleSubmit}
               thisRoom={thisRoom}
-              sessionIDs={sessionIDs}
               aliveCount={aliveCount}
               confirmedCount={confirmedCount}
             />
           </div>
         </>
       ) : (
-        <>
-          <JoinRoom
-            handleCreateOrJoin={handleCreateOrJoin}
-            name={name}
-            setName={setName}
-            handleReconnect={handleReconnect}
-          />
-        </>
+        <JoinRoom
+          handleCreateOrJoin={handleCreateOrJoin}
+          name={name}
+          setName={setName}
+          handleReconnect={handleReconnect}
+        />
       )}
     </div>
   );

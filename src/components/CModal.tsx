@@ -15,14 +15,12 @@ const transitionStyles: { [id: string]: React.CSSProperties } = {
 
 type ModalProps = {
   isOpen: boolean;
-  modal: string;
   handleCloseModal: () => void;
   message: string;
   messages: string[];
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   thisRoom: any;
-  sessionIDs: string[];
 };
 
 export default function CModal({
@@ -33,7 +31,6 @@ export default function CModal({
   setMessage,
   handleSubmit,
   thisRoom,
-  sessionIDs,
 }: ModalProps) {
   return (
     <Transition in={isOpen} timeout={500}>
@@ -54,7 +51,6 @@ export default function CModal({
                 setMessage={setMessage}
                 handleSubmit={handleSubmit}
                 thisRoom={thisRoom}
-                sessionIDs={sessionIDs}
               />
             </div>
           </div>

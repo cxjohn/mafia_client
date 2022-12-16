@@ -7,7 +7,6 @@ type ChatModalProps = {
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   thisRoom: any;
-  sessionIDs: string[];
 };
 
 export default function ChatModal({
@@ -17,7 +16,6 @@ export default function ChatModal({
   setMessage,
   handleSubmit,
   thisRoom,
-  sessionIDs,
 }: ChatModalProps) {
   return (
     <>
@@ -28,7 +26,7 @@ export default function ChatModal({
         </button>
       </div>
       <div className="flex flex-col justify-between px-4 h-4/5">
-        <PlayerList thisRoom={thisRoom} sessionIDs={sessionIDs} />
+        <PlayerList thisRoom={thisRoom} />
         <form className="flex flex-col" onSubmit={handleSubmit}>
           <span className="text-white">Enter a message</span>
           <input

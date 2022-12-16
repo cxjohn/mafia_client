@@ -1,10 +1,9 @@
 type WhackListProps = {
   //TODO: room type
   thisRoom: any;
-  sessionIDs: string[];
 };
 
-export default function WhackList({ thisRoom, sessionIDs }: WhackListProps) {
+export default function WhackList({ thisRoom }: WhackListProps) {
   const handleWhack = (client: string, target: string) => {
     //TODO: room type
     // @ts-ignore
@@ -15,7 +14,7 @@ export default function WhackList({ thisRoom, sessionIDs }: WhackListProps) {
       {thisRoom &&
         Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
           (session, idx) => {
-            if (session.role !== 0 && session.alive)
+            if (session.role !== 0 && session.alive) {
               return (
                 <li key={idx}>
                   <button
@@ -33,6 +32,9 @@ export default function WhackList({ thisRoom, sessionIDs }: WhackListProps) {
                   </button>
                 </li>
               );
+            } else {
+              return null;
+            }
           }
         )}
     </ul>
