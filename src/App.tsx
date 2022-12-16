@@ -6,16 +6,17 @@ import Header from "./layouts/Header";
 import JoinRoom from "./components/JoinRoom";
 import type { State } from "./types/State";
 import type { Player } from "./types/Player";
+import type { RoomType } from "./types";
 
-// // prod server
-// const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
+// prod server
+const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
 
 // dev server
-var host = window.location.host.replace(/:.*/, "");
-var client = new Colyseus.Client(`ws://${host}:2567`);
+// var host = window.location.host.replace(/:.*/, "");
+// var client = new Colyseus.Client(`ws://${host}:2567`);
 
 export default function App() {
-  const [thisRoom, setThisRoom] = useState<State>();
+  const [thisRoom, setThisRoom] = useState<RoomType>();
   const [messages, setMessages] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -28,19 +29,14 @@ export default function App() {
 
   async function createRoom(name: string) {
     try {
-      //TODO: room type
-      const room: any = await client.joinOrCreate<State>("my_room", {
+      const room: RoomType = await client.joinOrCreate<State>("my_room", {
         name: name,
       });
       setThisRoom(() => room);
-      console.log("state", room);
+      console.log("room", room);
 
       room.onMessage("messages", function (message: string) {
         setMessages((messages) => [...messages, message]);
-      });
-
-      room.onStateChange.once((state: State) => {
-        // setEntered(state.entered);
       });
 
       room.onStateChange((state: State) => {
@@ -75,31 +71,18 @@ export default function App() {
   }
 
   async function handleReconnect() {
-    const roomId = sessionStorage.getItem("roomId") ?? "no room id";
-    const sessionId = sessionStorage.getItem("sessionId") ?? "no session id";
+    const roomId = localStorage.getItem("roomId") ?? "";
+    const sessionId = localStorage.getItem("sessionId") ?? "";
 
     try {
-      const room: any = await client.reconnect(roomId, sessionId);
+      const room: RoomType = await client.reconnect(roomId, sessionId);
       setThisRoom(() => room);
 
-      console.log("Reconnected successfully!", room.state);
-      //@ts-ignore
-      console.log(
-        "Reconnected room instance phase",
-        //@ts-ignore
-        room.state.phase
-      );
-      //@ts-ignore
       setPhase(room.state.phase);
-      console.log("Reconnected phase", phase);
-      console.log("joined successfully", room);
+      console.log("Reconnected successfully", room);
 
       room.onMessage("messages", function (message: string) {
         setMessages((messages) => [...messages, message]);
-      });
-
-      room.onStateChange.once((state: State) => {
-        // setEntered(state.entered);
       });
 
       room.onStateChange((state: State) => {
@@ -118,7 +101,7 @@ export default function App() {
         setNarration(state.narration);
       });
     } catch (e) {
-      console.error("join error", e);
+      console.error("reconnection error", e);
     }
   }
 
@@ -126,14 +109,9 @@ export default function App() {
     setButtonClicked(false);
   }, [phase]);
 
-  // useEffect(() => {
-  //   console.log("hello");
-  //   thisRoom && setPhase(thisRoom.phase);
-  // }, [thisRoom && thisRoom.phase]);
-
   useEffect(() => {
-    thisRoom && sessionStorage.setItem("roomId", thisRoom.id);
-    thisRoom && sessionStorage.setItem("sessionId", thisRoom.sessionId);
+    thisRoom && localStorage.setItem("roomId", thisRoom.id);
+    thisRoom && localStorage.setItem("sessionId", thisRoom.sessionId);
   }, [thisRoom, thisRoom && thisRoom.id, thisRoom && thisRoom.sessionId]);
 
   const handleCreateOrJoin = (event: React.FormEvent<HTMLFormElement>) => {
@@ -146,16 +124,12 @@ export default function App() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    //TODO: room type
-    // @ts-ignore
     thisRoom?.send("message", message);
     setMessage("");
   };
 
   const handleNext = () => {
-    //TODO: room type
     setButtonClicked(true);
-    // @ts-ignore
     thisRoom?.send("nextPhase");
   };
 
@@ -172,9 +146,11 @@ export default function App() {
                 : ""
             }`}
           >
-            {/* @ts-ignore */}
-            {thisRoom && !thisRoom.state.players[thisRoom.sessionId]?.alive ? (
-              <div className="absolute bottom-1/2 text-3xl text-white font-bold w-full text-center">
+            {thisRoom &&
+            //@ts-ignore
+            !thisRoom.state.players[thisRoom.sessionId]?.alive &&
+            phase > 1 ? (
+              <div className="absolute bottom-1/2 text-9xl text-white font-bold w-full text-center text__shadow">
                 u r ded
               </div>
             ) : null}

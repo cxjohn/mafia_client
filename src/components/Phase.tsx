@@ -17,7 +17,6 @@ export enum PhaseType {
 
 type PhaseProps = {
   phase: PhaseType;
-  //TODO: room type
   thisRoom: any;
   time?: number;
   narration: string;

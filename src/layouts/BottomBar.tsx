@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import InfoModal from "../components/InfoModal";
-import CModal from "../components/CModal";
+import ChatModal from "../components/ChatModal";
 import { PhaseType } from "../components/Phase";
 
 type BottomBarProps = {
@@ -71,7 +71,7 @@ export default function BottomBar({
       setIsButtonDisabled(false);
       setButtonText("Next Room");
     } else if (phase === PhaseType.CONCLUSION) {
-      setButtonText("Play Again");
+      setShowButton(false);
     }
   }, [
     phase,
@@ -149,7 +149,7 @@ export default function BottomBar({
         handleCloseModal={handleCloseInfoModal}
         thisRoom={thisRoom}
       />
-      <CModal
+      <ChatModal
         isOpen={isChatModalOpen}
         handleCloseModal={handleCloseChatModal}
         message={message}

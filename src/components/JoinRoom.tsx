@@ -32,7 +32,7 @@ export default function JoinRoom({
         </form>
       </div>
 
-      {sessionStorage.getItem("sessionId") ? (
+      {localStorage.getItem("sessionId") ? (
         <button
           className="fixed bottom-0 w-full mx-auto"
           onClick={handleReconnect}

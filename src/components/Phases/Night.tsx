@@ -1,12 +1,8 @@
 import WhackList from "../WhackList";
 import TitleText from "../TitleText";
+import { RoomProps } from "../../types";
 
-type NightProps = {
-  //TODO: room type
-  thisRoom: any;
-};
-
-export default function Night({ thisRoom }: NightProps) {
+export default function Night({ thisRoom }: RoomProps) {
   return (
     <>
       <TitleText text="Night has fallen..." />
@@ -15,15 +11,20 @@ export default function Night({ thisRoom }: NightProps) {
       <hr />
 
       <div className="py-8">
+        {/* @ts-ignore */}
         {thisRoom.state.players[thisRoom.sessionId]?.role === 0 ? (
-          <WhackList thisRoom={thisRoom} />
-        ) : (
           <>
-            <p>Focus your attention to your screen.</p>
-            <p>Hide the contents of your screen.</p>
-            <p>Tap your phone occasionally.</p>
-            <p>Pretend to scroll occasionally.</p>
+            <p>Choose who to assassinate.</p>
+            <WhackList thisRoom={thisRoom} />
           </>
+        ) : (
+          <div className="text-left">
+            <p>
+              Focus your attention to your screen. Hide the contents of your
+              screen. Tap your phone occasionally. Pretend to scroll
+              occasionally.
+            </p>
+          </div>
         )}
       </div>
     </>

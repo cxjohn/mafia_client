@@ -1,17 +1,12 @@
 import { useState } from "react";
+import { RoomProps } from "../types";
 
-type VoteListProps = {
-  //TODO: room type
-  thisRoom: any;
-};
-
-export default function VoteList({ thisRoom }: VoteListProps) {
+export default function VoteList({ thisRoom }: RoomProps) {
   const [clicked, setClicked] = useState(false);
   const [selected, setSelected] = useState("");
   const handleVote = (client: string, target: string) => {
     setClicked(true);
     setSelected(target);
-    console.log("target", target);
     //TODO: room type
     // @ts-ignore
     thisRoom?.send("voteForLynch", (client, target));

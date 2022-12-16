@@ -1,12 +1,8 @@
 import TitleText from "../TitleText";
 import VoteList from "../VoteList";
+import { RoomProps } from "../../types";
 
-type VotingProps = {
-  //TODO: room type
-  thisRoom: any;
-};
-
-export default function Voting({ thisRoom }: VotingProps) {
+export default function Voting({ thisRoom }: RoomProps) {
   return (
     <>
       <TitleText text="No more talking!" />

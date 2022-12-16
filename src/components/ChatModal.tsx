@@ -1,6 +1,8 @@
+import Modal from "./Modal";
 import PlayerList from "./PlayerList";
 
-type ChatModalProps = {
+type ModalProps = {
+  isOpen: boolean;
   handleCloseModal: () => void;
   message: string;
   messages: string[];
@@ -10,15 +12,16 @@ type ChatModalProps = {
 };
 
 export default function ChatModal({
+  isOpen,
   handleCloseModal,
   message,
   messages,
   setMessage,
   handleSubmit,
   thisRoom,
-}: ChatModalProps) {
+}: ModalProps) {
   return (
-    <>
+    <Modal isOpen={isOpen} direction="right">
       <div className="flex justify-between items-center p-4">
         <h5 className="text-4xl text-white font-semibold">Player Chat</h5>
         <button onClick={handleCloseModal} className="close">
@@ -53,6 +56,6 @@ export default function ChatModal({
           })}
         </div>
       </div>
-    </>
+    </Modal>
   );
 }

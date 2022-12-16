@@ -1,9 +1,6 @@
-type WhackListProps = {
-  //TODO: room type
-  thisRoom: any;
-};
+import { RoomProps } from "../types";
 
-export default function WhackList({ thisRoom }: WhackListProps) {
+export default function WhackList({ thisRoom }: RoomProps) {
   const handleWhack = (client: string, target: string) => {
     //TODO: room type
     // @ts-ignore

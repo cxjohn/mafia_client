@@ -1,12 +1,8 @@
 import PlayerList from "../PlayerList";
 import TitleText from "../TitleText";
+import { RoomProps } from "../../types";
 
-type PlayerRoomProps = {
-  //TODO: room type
-  thisRoom: any;
-};
-
-export default function PlayerRoom({ thisRoom }: PlayerRoomProps) {
+export default function PlayerRoom({ thisRoom }: RoomProps) {
   return (
     <>
       <TitleText text="Playas Room" />

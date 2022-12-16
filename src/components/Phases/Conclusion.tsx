@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
+import { RoomProps } from "../../types";
 
-type ConclusionProps = {
-  //TODO: room type
-  thisRoom: any;
-};
-
-export default function Conclusion({ thisRoom }: ConclusionProps) {
+export default function Conclusion({ thisRoom }: RoomProps) {
   const [mafiaWin, setMafiaWin] = useState(false);
 
   useEffect(() => {
@@ -17,5 +13,20 @@ export default function Conclusion({ thisRoom }: ConclusionProps) {
       });
   }, [thisRoom]);
 
-  return <div>{mafiaWin ? "Mafia" : "Townspeople"} win!</div>;
+  const handleDispose = () => {
+    // @ts-ignore
+    thisRoom?.send("kill");
+  };
+
+  return (
+    <div className="flex flex-col justify-between h-[75vh]">
+      <div>{mafiaWin ? "Mafia" : "Townspeople"} win!</div>
+      <button
+        onClick={handleDispose}
+        className="border-2 border-white rounded p-2 cursor-pointer "
+      >
+        Dispose Room
+      </button>
+    </div>
+  );
 }

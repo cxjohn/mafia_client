@@ -1,9 +1,6 @@
-type PlayerListProps = {
-  //TODO: room type
-  thisRoom: any;
-};
+import { RoomProps } from "../types";
 
-export default function PlayerList({ thisRoom }: PlayerListProps) {
+export default function PlayerList({ thisRoom }: RoomProps) {
   return (
     <ol>
       {thisRoom &&
