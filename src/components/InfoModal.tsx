@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Modal from "./Modal";
 import { ModalContentProps } from "../types";
 
@@ -10,17 +10,23 @@ export default function InfoModal({
   const [mafiaCount, setMafiaCount] = useState(0);
   const [townspersonCount, setTownspersonCount] = useState(0);
 
-  const countRoles = (role: number) => {
-    let count = 0;
-    Object.values(Object.fromEntries(thisRoom.state.players["$items"])).forEach(
-      (item) => {
+  const countRoles = useCallback(
+    (role: number) => {
+      let count = 0;
+      Object.values(
+        Object.fromEntries(thisRoom.state.players["$items"])
+      ).forEach((item) => {
         if (item.role === role) {
           count++;
         }
-      }
-    );
-    return count;
-  };
+      });
+      return count;
+    },
+    [
+      thisRoom.state.players,
+      Object.values(Object.fromEntries(thisRoom.state.players["$items"])),
+    ]
+  );
 
   const handleDispose = () => {
     // @ts-ignore

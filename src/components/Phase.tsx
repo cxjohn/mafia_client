@@ -4,6 +4,7 @@ import NarrationMorning from "./Phases/NarrationMorning";
 import Night from "./Phases/Night";
 import PlayerRoom from "./Phases/Lobby";
 import Voting from "./Phases/Voting";
+import { RoomType, TimeType } from "../types";
 
 export enum PhaseType {
   LOBBY,
@@ -17,8 +18,8 @@ export enum PhaseType {
 
 type PhaseProps = {
   phase: PhaseType;
-  thisRoom: any;
-  time?: number;
+  thisRoom: RoomType;
+  time?: TimeType;
   narration: string;
 };
 

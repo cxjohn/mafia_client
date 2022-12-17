@@ -1,5 +1,6 @@
 import Modal from "./Modal";
 import PlayerList from "./PlayerList";
+import { RoomType } from "../types";
 
 type ModalProps = {
   isOpen: boolean;
@@ -8,7 +9,7 @@ type ModalProps = {
   messages: string[];
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  thisRoom: any;
+  thisRoom: RoomType;
 };
 
 export default function ChatModal({

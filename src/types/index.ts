@@ -16,3 +16,9 @@ export type ModalProps = {
   direction: "left" | "right";
   children: React.ReactNode;
 };
+
+export type TimeType = number;
+
+export type TimeProps = {
+  time?: TimeType;
+};

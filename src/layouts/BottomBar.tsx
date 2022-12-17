@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import InfoModal from "../components/InfoModal";
 import ChatModal from "../components/ChatModal";
 import { PhaseType } from "../components/Phase";
+import { RoomType } from "../types";
 
 type BottomBarProps = {
   phase: PhaseType;
@@ -11,7 +12,7 @@ type BottomBarProps = {
   messages: string[];
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  thisRoom: any;
+  thisRoom: RoomType;
   aliveCount: number;
   confirmedCount: number;
 };
@@ -48,7 +49,7 @@ export default function BottomBar({
       } else {
         setButtonText("Start Game");
       }
-
+      //@ts-ignore
       if (!thisRoom.state.players[thisRoom.sessionId]?.room_owner) {
         setShowButton(false);
       }
@@ -87,6 +88,7 @@ export default function BottomBar({
     );
     if (aliveCount - confirmedCount === 1) {
       let name = "";
+      //@ts-ignore
       for (let player of thisRoom.state.players.values()) {
         if (player.confirmed === false && player.alive) {
           name = player.name;

@@ -1,7 +1,8 @@
 import Time from "../Time";
 import TitleText from "../TitleText";
+import { TimeProps } from "../../types";
 
-export default function NarrationMorning({ time }: any) {
+export default function NarrationMorning({ time }: TimeProps) {
   return (
     <>
       <TitleText text="Morning" />
