@@ -120,12 +120,12 @@ export default function BottomBar({
   };
 
   return (
-    <div className="fixed bottom-0 w-full bg-black text__shadow py-4">
+    <div className="fixed bottom-0 w-full bg-secondaryBg py-4">
       <div className="flex justify-center align-baseline">
         {showButton && (
           <button
             className={`w-full max-w-md rounded p-4 ${
-              isButtonDisabled ? "bg-gray-800" : "bg-sky-700"
+              isButtonDisabled ? "bg-primaryBg" : "bg-secondaryText"
             }`}
             onClick={() => handleNext()}
             disabled={isButtonDisabled}
@@ -134,13 +134,13 @@ export default function BottomBar({
           </button>
         )}
         <button
-          className="absolute -top-12 right-0 bg-black rounded-tl-xl p-2"
+          className="absolute -top-12 right-0 bg-secondaryBg rounded-tl-xl p-2"
           onClick={() => handleOpenChatModal()}
         >
           <img className="w-8" src="./images/chat.webp" alt="chat" />
         </button>
         <button
-          className="absolute -top-12 left-0 bg-black rounded-tr-xl p-2"
+          className="absolute -top-12 left-0 bg-secondaryBg rounded-tr-xl p-2"
           onClick={() => handleOpenInfoModal()}
         >
           <img className="w-8" src="./images/info.png" alt="info" />

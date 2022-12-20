@@ -24,15 +24,15 @@ export default function ChatModal({
   return (
     <Modal isOpen={isOpen} direction="right">
       <div className="flex justify-between items-center p-4">
-        <h5 className="text-4xl text-white font-semibold">Player Chat</h5>
+        <h5 className="text-4xl font-semibold">Player Chat</h5>
         <button onClick={handleCloseModal} className="close">
-          <span className="text-6xl text-white">×</span>
+          <span className="text-6xl ">×</span>
         </button>
       </div>
       <div className="flex flex-col justify-between px-4 h-4/5">
         <PlayerList thisRoom={thisRoom} />
         <form className="flex flex-col" onSubmit={handleSubmit}>
-          <span className="text-white">Enter a message</span>
+          <span>Enter a message</span>
           <input
             type="text"
             className="text-black rounded mb-2"
@@ -41,7 +41,7 @@ export default function ChatModal({
           />
           <div>
             <input
-              className="bg-white text-black rounded p-2 cursor-pointer"
+              className="bg-primaryText text-black rounded p-2 cursor-pointer"
               type="submit"
             />
           </div>
@@ -49,11 +49,7 @@ export default function ChatModal({
 
         <div className="overflow-auto h-[60vh]">
           {messages.map((message, idx) => {
-            return (
-              <p className="text-white" key={idx}>
-                {message}
-              </p>
-            );
+            return <p key={idx}>{message}</p>;
           })}
         </div>
       </div>

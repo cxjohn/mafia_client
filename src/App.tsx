@@ -7,13 +7,14 @@ import JoinRoom from "./components/JoinRoom";
 import type { State } from "./types/State";
 import type { Player } from "./types/Player";
 import type { RoomType } from "./types";
+import { Role } from "./types/Player";
 
-// prod server
-const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
+// // prod server
+// const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
 
-// dev server
-// var host = window.location.host.replace(/:.*/, "");
-// var client = new Colyseus.Client(`ws://${host}:2567`);
+//dev server
+var host = window.location.host.replace(/:.*/, "");
+var client = new Colyseus.Client(`ws://${host}:2567`);
 
 export default function App() {
   const [thisRoom, setThisRoom] = useState<RoomType>();
@@ -130,18 +131,33 @@ export default function App() {
 
   const handleNext = () => {
     setButtonClicked(true);
+    if (thisRoom?.state.phase === PhaseType.LOBBY) {
+      let mafia_count = Math.max(
+        1,
+        Math.floor(thisRoom.state.players.size / 5)
+      );
+      // Create the roles array here temporarily. The front end will need a selection menu to select the number of mafia
+      // We are passing an array instead of a number because we will need an array as soon as we introduce roles that aren't mafia.
+      let roles: Array<Role> = Array<Role>(thisRoom.state.players.size);
+      roles.fill(Role.MAFIA, 0, mafia_count);
+      roles.fill(Role.TOWNSPERSON, mafia_count, thisRoom.state.players.size);
+      thisRoom?.send("setRoles", (thisRoom.sessionId, roles));
+    }
     thisRoom?.send("nextPhase");
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#222] text-3xl text-white font-bold">
+    <div className="w-full min-h-screen bg-primaryBg text-3xl text-primaryText font-bold">
       {!thisRoom ? <Header /> : null}
       {thisRoom ? (
         <>
           <div
             className={`${
+              thisRoom &&
               //@ts-ignore
-              thisRoom && !thisRoom.state.players[thisRoom.sessionId]?.alive
+              !thisRoom.state.players[thisRoom.sessionId]?.alive &&
+              phase > 1 &&
+              phase < 6
                 ? "fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-60 z-10"
                 : ""
             }`}
@@ -149,8 +165,9 @@ export default function App() {
             {thisRoom &&
             //@ts-ignore
             !thisRoom.state.players[thisRoom.sessionId]?.alive &&
-            phase > 1 ? (
-              <div className="absolute bottom-1/2 text-9xl text-white font-bold w-full text-center text__shadow">
+            phase > 1 &&
+            phase < 6 ? (
+              <div className="absolute bottom-1/2 text-9xl font-bold w-full text-center">
                 u r ded
               </div>
             ) : null}
@@ -163,6 +180,7 @@ export default function App() {
                   thisRoom={thisRoom}
                   time={time}
                   narration={narration}
+                  setThisRoom={setThisRoom}
                 />
               </div>
             </div>

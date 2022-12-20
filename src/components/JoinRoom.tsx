@@ -24,7 +24,7 @@ export default function JoinRoom({
           />
           <div>
             <input
-              className="border-2 border-white rounded p-2 cursor-pointer mt-4"
+              className="border-2 border-primaryText rounded p-2 cursor-pointer mt-4"
               type="submit"
               value="Join Game"
             />

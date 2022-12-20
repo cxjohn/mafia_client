@@ -5,11 +5,7 @@ type TitleTextProps = {
 
 export default function TitleText({ text, classes }: TitleTextProps) {
   return (
-    <h1
-      className={`text-6xl text-white font-semibold text__shadow ${
-        classes ? classes : ""
-      }`}
-    >
+    <h1 className={`text-6xl font-semibold ${classes ? classes : ""}`}>
       {text}
     </h1>
   );

@@ -23,7 +23,7 @@ export default function Chat({
         />
         <div>
           <input
-            className="border-2 border-white rounded p-2 cursor-pointer"
+            className="border-2 border-primaryText rounded p-2 cursor-pointer"
             type="submit"
           />
         </div>
@@ -31,11 +31,7 @@ export default function Chat({
 
       <div>
         {messages.map((message, idx) => {
-          return (
-            <p className="text-white" key={idx}>
-              {message}
-            </p>
-          );
+          return <p key={idx}>{message}</p>;
         })}
       </div>
     </div>

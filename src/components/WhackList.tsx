@@ -1,10 +1,8 @@
 import { RoomProps } from "../types";
 
 export default function WhackList({ thisRoom }: RoomProps) {
-  const handleWhack = (client: string, target: string) => {
-    //TODO: room type
-    // @ts-ignore
-    thisRoom?.send("voteForWhack", (client, target));
+  const handleWhack = (target: string) => {
+    thisRoom?.send("voteForWhack", target);
   };
   return (
     <ul className="my-8">
@@ -17,13 +15,12 @@ export default function WhackList({ thisRoom }: RoomProps) {
                   <button
                     onClick={() =>
                       handleWhack(
-                        thisRoom.sessionId,
                         Object.keys(Object.fromEntries(thisRoom.state.players))[
                           idx
                         ]
                       )
                     }
-                    className="text-xl p-4 border border-white w-full hover:bg-gray-800"
+                    className="text-xl p-4 border border-primaryText w-full hover:bg-secondaryBg"
                   >
                     {session.name}
                   </button>

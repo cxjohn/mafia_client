@@ -4,12 +4,10 @@ import { RoomProps } from "../types";
 export default function VoteList({ thisRoom }: RoomProps) {
   const [clicked, setClicked] = useState(false);
   const [selected, setSelected] = useState("");
-  const handleVote = (client: string, target: string) => {
+  const handleVote = (target: string) => {
     setClicked(true);
     setSelected(target);
-    //TODO: room type
-    // @ts-ignore
-    thisRoom?.send("voteForLynch", (client, target));
+    thisRoom.send("voteForLynch", target);
   };
   return (
     <ul className="my-8">
@@ -26,20 +24,19 @@ export default function VoteList({ thisRoom }: RoomProps) {
                   <button
                     onClick={() =>
                       handleVote(
-                        thisRoom.sessionId,
                         Object.keys(Object.fromEntries(thisRoom.state.players))[
                           idx
                         ]
                       )
                     }
-                    className={`text-xl p-4 border border-white w-full ${
-                      !clicked ? "hover:bg-gray-800" : ""
+                    className={`text-xl p-4 border border-primaryText w-full ${
+                      !clicked ? "hover:bg-secondaryBg" : ""
                     } ${
                       selected ===
                       Object.keys(Object.fromEntries(thisRoom.state.players))[
                         idx
                       ]
-                        ? "bg-gray-800"
+                        ? "bg-secondaryBg"
                         : ""
                     } `}
                     disabled={clicked}

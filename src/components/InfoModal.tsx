@@ -29,7 +29,6 @@ export default function InfoModal({
   );
 
   const handleDispose = () => {
-    // @ts-ignore
     thisRoom?.send("kill");
   };
 
@@ -42,10 +41,10 @@ export default function InfoModal({
     <Modal isOpen={isOpen} direction="left">
       <div>
         <div className="flex justify-between items-center">
-          <h5 className="text-4xl text-white font-semibold">Roles</h5>
+          <h5 className="text-4xl font-semibold">Roles</h5>
 
           <button onClick={handleCloseModal} className="close">
-            <span className="text-6xl text-white">×</span>
+            <span className="text-6xl">×</span>
           </button>
         </div>
         <div className="grid grid-cols-2 gap-12 py-4">
@@ -75,15 +74,16 @@ export default function InfoModal({
 
         <hr />
         <div className="flex flex-col justify-between">
-          <h5 className="text-4xl text-white font-semibold pt-8">Rules</h5>
-
-          <p className="py-4">
-            The Townspeople win when all the mafia are dead
-          </p>
-          <p>The Mafia win when all the Townspeople are dead</p>
+          <h5 className="text-4xl font-semibold pt-8">Rules</h5>
+          <div className="text-xl">
+            <p className="py-4">
+              The Townspeople win when all the mafia are dead
+            </p>
+            <p>The Mafia win when all the Townspeople are dead</p>
+          </div>
         </div>
       </div>
-      <button onClick={handleDispose} className="text-red-600 text-xs">
+      <button onClick={handleDispose} className="text-red text-xs">
         Please don't click this
       </button>
     </Modal>

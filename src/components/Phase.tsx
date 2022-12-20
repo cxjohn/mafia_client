@@ -21,6 +21,7 @@ type PhaseProps = {
   thisRoom: RoomType;
   time?: TimeType;
   narration: string;
+  setThisRoom: any;
 };
 
 export default function Phase({
@@ -28,6 +29,7 @@ export default function Phase({
   thisRoom,
   time,
   narration,
+  setThisRoom,
 }: PhaseProps) {
   switch (phase) {
     case PhaseType.LOBBY:
@@ -43,7 +45,7 @@ export default function Phase({
     case PhaseType.NARRATIONLYNCHING:
       return <div>Narration Lynching</div>;
     case PhaseType.CONCLUSION:
-      return <Conclusion thisRoom={thisRoom} />;
+      return <Conclusion thisRoom={thisRoom} setThisRoom={setThisRoom} />;
     default:
       return <div>phase error</div>;
   }

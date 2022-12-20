@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Transition } from "react-transition-group";
 import { ModalProps } from "../types";
 
@@ -19,17 +20,19 @@ enum DirectionEnum {
 }
 
 export default function Modal({ isOpen, direction, children }: ModalProps) {
+  const nodeRef = useRef(null);
   return (
-    <Transition in={isOpen} timeout={500}>
+    <Transition nodeRef={nodeRef} in={isOpen} timeout={500}>
       {(state) => (
         <div
+          ref={nodeRef}
           className={`fixed top-0 ${DirectionEnum[direction]} z-10 h-full w-full max-w-md`}
           style={{
             ...defaultStyle,
             ...transitionStyles[state],
           }}
         >
-          <div className="fixed bg-black shadow-md w-full h-[calc(100vh-100px)]">
+          <div className="fixed bg-secondaryBg shadow-md w-full h-[calc(100vh-100px)]">
             <div className="h-full flex flex-col justify-between p-4">
               {children}
             </div>

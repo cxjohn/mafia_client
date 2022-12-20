@@ -12,8 +12,8 @@ export default function PlayerList({ thisRoom }: RoomProps) {
                   Object.keys(Object.fromEntries(thisRoom.state.players))[
                     idx
                   ] === thisRoom.sessionId
-                    ? "text-sky-700"
-                    : "text-white"
+                    ? "text-secondaryText"
+                    : "text-primaryText"
                 } ${session.alive ? "" : "line-through"}`}
                 key={idx}
               >
