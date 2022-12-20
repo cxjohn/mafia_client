@@ -7,6 +7,7 @@ import JoinRoom from "./components/JoinRoom";
 import type { State } from "./types/State";
 import type { Player } from "./types/Player";
 import type { RoomType } from "./types";
+import { Role } from "./types/Player";
 
 // prod server
 const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
@@ -130,7 +131,20 @@ export default function App() {
 
   const handleNext = () => {
     setButtonClicked(true);
+
+    if (thisRoom?.state.phase === PhaseType.LOBBY) {
+
+      let mafia_count = Math.max(1, Math.floor(thisRoom.state.players.size / 5));
+      // Create the roles array here temporarily. The front end will need a selection menu to select the number of mafia
+      // We are passing an array instead of a number because we will need an array as soon as we introduce roles that aren't mafia.
+      let roles: Array<Role> = Array<Role>(thisRoom.state.players.size);
+      roles.fill(Role.MAFIA, 0, mafia_count);
+      roles.fill(Role.TOWNSPERSON, mafia_count, thisRoom.state.players.size);
+      thisRoom?.send("setRoles", (thisRoom.sessionId, roles));
+    }
+
     thisRoom?.send("nextPhase");
+    
   };
 
   return (
