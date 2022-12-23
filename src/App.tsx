@@ -9,12 +9,12 @@ import type { Player } from "./types/Player";
 import type { RoomType, RolesType } from "./types";
 import { Role } from "./types/Player";
 
-// // prod server
-// const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
+// prod server
+const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
 
-//dev server
-var host = window.location.host.replace(/:.*/, "");
-var client = new Colyseus.Client(`ws://${host}:2567`);
+// //dev server
+// var host = window.location.host.replace(/:.*/, "");
+// var client = new Colyseus.Client(`ws://${host}:2567`);
 
 const roles: RolesType[] = [
   { label: "Mafia", id: 0, count: 0 },
