@@ -10,7 +10,9 @@ import type { RoomType, RolesType } from "./types";
 import { Role } from "./types/Player";
 
 // prod server
-const client = new Colyseus.Client("ws://t7y27k.us-east-vin.colyseus.net:2567");
+const client = new Colyseus.Client(
+  "wss://t7y27k.us-east-vin.colyseus.net:2567"
+);
 
 // //dev server
 // var host = window.location.host.replace(/:.*/, "");
