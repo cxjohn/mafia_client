@@ -11,8 +11,7 @@ export default function Night({ thisRoom }: RoomProps) {
       <hr />
 
       <div className="py-8">
-        {/* @ts-ignore */}
-        {thisRoom.state.players[thisRoom.sessionId]?.role === 0 ? (
+        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 0 ? (
           <>
             <p>Choose who to assassinate.</p>
             <WhackList thisRoom={thisRoom} />

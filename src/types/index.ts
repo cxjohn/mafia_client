@@ -22,3 +22,9 @@ export type TimeType = number;
 export type TimeProps = {
   time?: TimeType;
 };
+
+export type RolesType = {
+  label: string;
+  id: number;
+  count: number;
+};

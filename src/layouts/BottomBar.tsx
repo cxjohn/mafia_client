@@ -49,8 +49,7 @@ export default function BottomBar({
       } else {
         setButtonText("Start Game");
       }
-      //@ts-ignore
-      if (!thisRoom.state.players[thisRoom.sessionId]?.room_owner) {
+      if (!thisRoom.state.players.get(thisRoom.sessionId)?.room_owner) {
         setShowButton(false);
       }
     } else if (phase === PhaseType.INTRODUCTION) {
@@ -88,7 +87,6 @@ export default function BottomBar({
     );
     if (aliveCount - confirmedCount === 1) {
       let name = "";
-      //@ts-ignore
       for (let player of thisRoom.state.players.values()) {
         if (player.confirmed === false && player.alive) {
           name = player.name;

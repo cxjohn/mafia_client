@@ -2,9 +2,9 @@ import Conclusion from "./Phases/Conclusion";
 import Introduction from "./Phases/Introduction";
 import NarrationMorning from "./Phases/NarrationMorning";
 import Night from "./Phases/Night";
-import PlayerRoom from "./Phases/Lobby";
+import Lobby from "./Phases/Lobby";
 import Voting from "./Phases/Voting";
-import { RoomType, TimeType } from "../types";
+import { RoomType, TimeType, RolesType } from "../types";
 
 export enum PhaseType {
   LOBBY,
@@ -22,6 +22,8 @@ type PhaseProps = {
   time?: TimeType;
   narration: string;
   setThisRoom: any;
+  rolesArray: RolesType[];
+  setRolesArray: React.Dispatch<React.SetStateAction<RolesType[]>>;
 };
 
 export default function Phase({
@@ -30,10 +32,18 @@ export default function Phase({
   time,
   narration,
   setThisRoom,
+  rolesArray,
+  setRolesArray,
 }: PhaseProps) {
   switch (phase) {
     case PhaseType.LOBBY:
-      return <PlayerRoom thisRoom={thisRoom} />;
+      return (
+        <Lobby
+          thisRoom={thisRoom}
+          rolesArray={rolesArray}
+          setRolesArray={setRolesArray}
+        />
+      );
     case PhaseType.INTRODUCTION:
       return <Introduction narration={narration} thisRoom={thisRoom} />;
     case PhaseType.NIGHT:
