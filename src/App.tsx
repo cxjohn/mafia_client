@@ -10,9 +10,7 @@ import type { RoomType, RolesType } from "./types";
 import { Role } from "./types/Player";
 
 // prod server
-const client = new Colyseus.Client(
-  "wss://t7y27k.us-east-vin.colyseus.net:2567"
-);
+const client = new Colyseus.Client("wss://t7y27k.us-east-vin.colyseus.net");
 
 // //dev server
 // var host = window.location.host.replace(/:.*/, "");
@@ -134,8 +132,10 @@ export default function App() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    thisRoom?.send("message", message);
-    setMessage("");
+    if (message !== "") {
+      thisRoom?.send("message", message);
+      setMessage("");
+    }
   };
 
   useEffect(() => {

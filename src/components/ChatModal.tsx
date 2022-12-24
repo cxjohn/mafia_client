@@ -29,8 +29,10 @@ export default function ChatModal({
           <span className="text-6xl ">×</span>
         </button>
       </div>
-      <div className="flex flex-col justify-between px-4 h-4/5">
+      <div className="px-4">
         <PlayerList thisRoom={thisRoom} />
+      </div>
+      <div className="flex flex-col justify-between px-4 h-4/5">
         <form className="flex flex-col" onSubmit={handleSubmit}>
           <span>Enter a message</span>
           <input
@@ -47,7 +49,7 @@ export default function ChatModal({
           </div>
         </form>
 
-        <div className="overflow-auto h-[60vh]">
+        <div className="overflow-auto h-[60vh] pt-4">
           {messages.map((message, idx) => {
             return <p key={idx}>{message}</p>;
           })}
