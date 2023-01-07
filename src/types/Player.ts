@@ -17,6 +17,8 @@ import {
 export enum Role {
   MAFIA = 0,
   TOWNSPERSON = 1,
+  ANGEL = 2,
+  DECTECTIVE = 3,
 }
 
 export class Player extends Schema {

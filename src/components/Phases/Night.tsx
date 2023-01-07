@@ -1,6 +1,8 @@
 import WhackList from "../WhackList";
 import TitleText from "../TitleText";
 import { RoomProps } from "../../types";
+import SaveList from "../SaveList";
+import DetectList from "../DetectList";
 
 export default function Night({ thisRoom }: RoomProps) {
   return (
@@ -16,7 +18,8 @@ export default function Night({ thisRoom }: RoomProps) {
             <p>Choose who to assassinate.</p>
             <WhackList thisRoom={thisRoom} />
           </>
-        ) : (
+        ) : null}
+        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 1 ? (
           <div className="text-left">
             <p>
               Focus your attention to your screen. Hide the contents of your
@@ -24,7 +27,19 @@ export default function Night({ thisRoom }: RoomProps) {
               occasionally.
             </p>
           </div>
-        )}
+        ) : null}
+        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 2 ? (
+          <>
+            <p>Choose who to save</p>
+            <SaveList thisRoom={thisRoom} />
+          </>
+        ) : null}
+        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 3 ? (
+          <>
+            <p>Choose who to investigate</p>
+            <DetectList thisRoom={thisRoom} />
+          </>
+        ) : null}
       </div>
     </>
   );

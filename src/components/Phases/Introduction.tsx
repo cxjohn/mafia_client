@@ -4,6 +4,8 @@ import { RoomType } from "../../types";
 enum Role {
   "Mafia",
   "Townsperson",
+  "Angel",
+  "Detective",
 }
 
 type IntroProps = {

@@ -10,15 +10,17 @@ import type { RoomType, RolesType } from "./types";
 import { Role } from "./types/Player";
 
 // prod server
-const client = new Colyseus.Client("wss://t7y27k.us-east-vin.colyseus.net");
+// const client = new Colyseus.Client("wss://t7y27k.us-east-vin.colyseus.net");
 
-// //dev server
-// var host = window.location.host.replace(/:.*/, "");
-// var client = new Colyseus.Client(`ws://${host}:2567`);
+//dev server
+var host = window.location.host.replace(/:.*/, "");
+var client = new Colyseus.Client(`ws://${host}:2567`);
 
 const roles: RolesType[] = [
   { label: "Mafia", id: 0, count: 0 },
   { label: "Townsperson", id: 1, count: 0 },
+  { label: "Angel", id: 2, count: 0 },
+  { label: "Detective", id: 3, count: 0 },
 ];
 
 export default function App() {
