@@ -1,48 +1,34 @@
-import { useState, useEffect } from "react";
-import { RolesType, RoomProps } from "../../types";
+import { useGame } from "../../GameContext";
+import { RolesType } from "../../types";
 
-interface RoleProps extends RoomProps {
+type RoleProps = {
   role: RolesType;
   handleCount: (arg0: string, arg1: number) => void;
   totalCount: number;
-}
+};
 
 export default function RoleCounter({
-  thisRoom,
   role,
   handleCount,
   totalCount,
 }: RoleProps) {
-  const [decrementDisabled, setDecrementDisabled] = useState(false);
-  const [incrementDisabled, setIncrementDisabled] = useState(false);
+  const game = useGame();
 
-  useEffect(() => {
-    if (role.count < 1) {
-      setDecrementDisabled(true);
-    } else {
-      setDecrementDisabled(false);
-    }
-  }, [role.count]);
-
-  useEffect(() => {
-    if (
-      totalCount >
-      Object.keys(Object.fromEntries(thisRoom.state.players)).length - 1
-    ) {
-      setIncrementDisabled(true);
-    } else {
-      setIncrementDisabled(false);
-    }
-  }, [totalCount, thisRoom.state.players]);
+  const decrementDisabled = role.count < 1;
+  const incrementDisabled = totalCount > game.players.size - 1;
 
   return (
     <div className="flex items-center h-10 w-60 mx-auto mb-1">
-      <label className="w-full text-sm font-mono text-terminalFg">{role.label}</label>
+      <label className="w-full text-sm font-mono text-terminalFg">
+        {role.label}
+      </label>
       <div className="flex flex-row h-10 w-32 relative bg-transparent mt-1 border border-terminalAccent">
         <button
           onClick={() => handleCount("decrement", role.id)}
           className={`h-full w-20 border-r border-terminalAccent cursor-pointer outline-none text-terminalFg font-mono ${
-            decrementDisabled ? "bg-black opacity-50" : "bg-black hover:bg-terminalAccent hover:text-black"
+            decrementDisabled
+              ? "bg-black opacity-50"
+              : "bg-black hover:bg-terminalAccent hover:text-black"
           } transition-all duration-150`}
           disabled={decrementDisabled}
         >
@@ -54,7 +40,9 @@ export default function RoleCounter({
         <button
           onClick={() => handleCount("increment", role.id)}
           className={`h-full w-20 cursor-pointer text-terminalFg font-mono ${
-            incrementDisabled ? "bg-black opacity-50" : "bg-black hover:bg-terminalAccent hover:text-black"
+            incrementDisabled
+              ? "bg-black opacity-50"
+              : "bg-black hover:bg-terminalAccent hover:text-black"
           } transition-all duration-150`}
           disabled={incrementDisabled}
         >

@@ -7,10 +7,7 @@ export interface RoomProps {
   thisRoom: Room<State>;
 }
 
-export interface ModalContentProps extends RoomProps {
-  isOpen: boolean;
-  handleCloseModal: () => void;
-}
+
 export type ModalProps = {
   isOpen: boolean;
   direction: "left" | "right";
@@ -28,3 +25,13 @@ export type RolesType = {
   id: number;
   count: number;
 };
+
+export enum PhaseType {
+  LOBBY,
+  INTRODUCTION,
+  NIGHT,
+  NARRATIONMORNING,
+  VOTING,
+  NARRATIONLYNCHING,
+  CONCLUSION,
+}

@@ -1,10 +1,14 @@
+import { useGame } from "../../GameContext";
 import WhackList from "../WhackList";
 import TitleText from "../TitleText";
-import { RoomProps } from "../../types";
 import SaveList from "../SaveList";
 import DetectList from "../DetectList";
+import { Role } from "../../types/Player";
 
-export default function Night({ thisRoom }: RoomProps) {
+export default function Night() {
+  const game = useGame();
+  const currentPlayer = game.players.get(game.sessionId);
+  const role = currentPlayer?.role;
   return (
     <>
       <TitleText text="Night has fallen..." />
@@ -13,13 +17,13 @@ export default function Night({ thisRoom }: RoomProps) {
       <hr className="border-terminalAccent" />
 
       <div className="py-8 text-terminalFg font-mono">
-        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 0 ? (
+        {role === Role.MAFIA && (
           <>
             <p>Choose who to assassinate.</p>
-            <WhackList thisRoom={thisRoom} />
+            <WhackList />
           </>
-        ) : null}
-        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 1 ? (
+        )}
+        {role === Role.TOWNSPERSON && (
           <div className="text-left">
             <p>
               Focus your attention to your screen. Hide the contents of your
@@ -27,19 +31,19 @@ export default function Night({ thisRoom }: RoomProps) {
               occasionally.
             </p>
           </div>
-        ) : null}
-        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 2 ? (
+        )}
+        {role === Role.ANGEL && (
           <>
             <p>Choose who to save</p>
-            <SaveList thisRoom={thisRoom} />
+            <SaveList />
           </>
-        ) : null}
-        {thisRoom.state.players.get(thisRoom.sessionId)?.role === 3 ? (
+        )}
+        {role === Role.DETECTIVE && (
           <>
             <p>Choose who to investigate</p>
-            <DetectList thisRoom={thisRoom} />
+            <DetectList />
           </>
-        ) : null}
+        )}
       </div>
     </>
   );
