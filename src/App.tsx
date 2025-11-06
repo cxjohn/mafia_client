@@ -171,7 +171,7 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-primaryBg text-3xl text-primaryText font-bold">
+    <div className="w-full min-h-screen bg-terminalBg text-terminalFg font-mono">
       {!thisRoom ? <Header /> : null}
       {thisRoom ? (
         <>
@@ -181,7 +181,7 @@ export default function App() {
               !thisRoom.state.players.get(thisRoom.sessionId)?.alive &&
               phase > 1 &&
               phase < 6
-                ? "fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-60 z-10"
+                ? "fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-80 z-10"
                 : ""
             }`}
           >
@@ -189,7 +189,7 @@ export default function App() {
             !thisRoom.state.players.get(thisRoom.sessionId)?.alive &&
             phase > 1 &&
             phase < 6 ? (
-              <div className="absolute bottom-1/2 text-9xl font-bold w-full text-center">
+              <div className="absolute bottom-1/2 text-9xl font-bold w-full text-center text-terminalAlert animate-flicker">
                 u r ded
               </div>
             ) : null}

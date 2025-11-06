@@ -10,9 +10,9 @@ export default function Night({ thisRoom }: RoomProps) {
       <TitleText text="Night has fallen..." />
 
       <p className="text-6xl py-8">🌕</p>
-      <hr />
+      <hr className="border-terminalAccent" />
 
-      <div className="py-8">
+      <div className="py-8 text-terminalFg font-mono">
         {thisRoom.state.players.get(thisRoom.sessionId)?.role === 0 ? (
           <>
             <p>Choose who to assassinate.</p>

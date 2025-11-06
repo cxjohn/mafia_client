@@ -17,8 +17,8 @@ export default function Introduction({ narration, thisRoom }: IntroProps) {
   return (
     <>
       <TitleText text="Mafia!" />
-      <p className="text-left py-12">{narration}</p>
-      <p className="text-secondaryText mt-12">
+      <p className="text-left py-12 text-terminalFg font-mono">{narration}</p>
+      <p className="text-terminalAccent mt-12 font-mono">
         You are a {/* @ts-ignore */}
         {Role[thisRoom && thisRoom.state.players[thisRoom.sessionId]?.role]}
       </p>

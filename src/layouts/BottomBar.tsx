@@ -118,12 +118,12 @@ export default function BottomBar({
   };
 
   return (
-    <div className="fixed bottom-0 w-full bg-secondaryBg py-4">
+    <div className="fixed bottom-0 w-full bg-black border-t border-terminalAccent py-4">
       <div className="flex justify-center align-baseline">
         {showButton && (
           <button
-            className={`w-full max-w-md rounded p-4 ${
-              isButtonDisabled ? "bg-primaryBg" : "bg-secondaryText"
+            className={`w-full max-w-md border border-terminalFg text-terminalFg hover:text-black hover:bg-terminalAccent px-4 py-2 transition-all duration-150 font-mono ${
+              isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={() => handleNext()}
             disabled={isButtonDisabled}
@@ -132,13 +132,13 @@ export default function BottomBar({
           </button>
         )}
         <button
-          className="absolute -top-12 right-0 bg-secondaryBg rounded-tl-xl p-2"
+          className="absolute -top-12 right-0 bg-black border border-terminalAccent border-b-0 p-2 hover:bg-terminalAccent hover:text-black transition-all duration-150"
           onClick={() => handleOpenChatModal()}
         >
           <img className="w-8" src="./images/chat.webp" alt="chat" />
         </button>
         <button
-          className="absolute -top-12 left-0 bg-secondaryBg rounded-tr-xl p-2"
+          className="absolute -top-12 left-0 bg-black border border-terminalAccent border-b-0 p-2 hover:bg-terminalAccent hover:text-black transition-all duration-150"
           onClick={() => handleOpenInfoModal()}
         >
           <img className="w-8" src="./images/info.png" alt="info" />

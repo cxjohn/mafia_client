@@ -20,7 +20,7 @@ export default function WhackList({ thisRoom }: RoomProps) {
                         ]
                       )
                     }
-                    className="text-xl p-4 border border-primaryText w-full hover:bg-secondaryBg"
+                    className="text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full hover:bg-terminalAccent hover:text-black transition-all duration-150"
                   >
                     {session.name}
                   </button>

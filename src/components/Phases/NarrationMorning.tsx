@@ -7,10 +7,10 @@ export default function NarrationMorning({ time }: TimeProps) {
     <>
       <TitleText text="Morning" />
       <p className="text-6xl py-8">☀️</p>
-      <hr />
+      <hr className="border-terminalAccent" />
       <Time time={time} />
-      <hr />
-      <div className="py-8 text-left">
+      <hr className="border-terminalAccent" />
+      <div className="py-8 text-left text-terminalFg font-mono">
         <p>
           Discuss what happened in the night. When the time is up, you must vote
           to kill someone immediately.
