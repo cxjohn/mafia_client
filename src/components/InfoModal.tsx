@@ -2,11 +2,7 @@ import { useMemo } from "react";
 import Modal from "./Modal";
 import { useGame } from "../GameContext";
 import { Role } from "../types/Player";
-
-type ModalContentProps = {
-  isOpen: boolean;
-  handleCloseModal: () => void;
-}
+import { ModalContentProps } from "../types";
 
 export default function InfoModal({
   isOpen,

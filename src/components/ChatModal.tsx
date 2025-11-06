@@ -2,17 +2,12 @@ import { useState } from "react";
 import Modal from "./Modal";
 import PlayerList from "./PlayerList";
 import { useGame } from "../GameContext";
-
-
-type ModalProps = {
-  isOpen: boolean;
-  handleCloseModal: () => void;
-};
+import { ModalContentProps } from "../types";
 
 export default function ChatModal({
   isOpen,
   handleCloseModal,
-}: ModalProps) {
+}: ModalContentProps) {
   const game = useGame();
  const [message, setMessage] = useState("");
 
