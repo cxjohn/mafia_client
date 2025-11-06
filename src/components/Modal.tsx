@@ -32,8 +32,8 @@ export default function Modal({ isOpen, direction, children }: ModalProps) {
             ...transitionStyles[state],
           }}
         >
-          <div className="fixed bg-secondaryBg shadow-md w-full h-[calc(100vh-100px)]">
-            <div className="h-full flex flex-col justify-between p-4">
+          <div className="fixed bg-black border border-terminalAccent w-full h-[calc(100vh-100px)]">
+            <div className="h-full flex flex-col justify-between p-4 text-terminalFg font-mono">
               {children}
             </div>
           </div>

@@ -28,16 +28,16 @@ export default function DetectList({ thisRoom }: RoomProps) {
                         ]
                       )
                     }
-                    className={`text-xl p-4 border border-primaryText w-full ${
-                      !clicked ? "hover:bg-secondaryBg" : ""
+                    className={`text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full ${
+                      !clicked ? "hover:bg-terminalAccent hover:text-black" : ""
                     } ${
                       selected ===
                       Object.keys(Object.fromEntries(thisRoom.state.players))[
                         idx
                       ]
-                        ? "bg-secondaryBg"
+                        ? "bg-terminalAccent text-black"
                         : ""
-                    } `}
+                    } transition-all duration-150`}
                     disabled={clicked}
                   >
                     {session.name}
@@ -49,7 +49,7 @@ export default function DetectList({ thisRoom }: RoomProps) {
             }
           }
         )}
-      <div className="my-8">
+      <div className="my-8 text-terminalFg font-mono">
         {selected && thisRoom.state.players.get(selected)?.name}
         {selected
           ? thisRoom.state.players.get(selected)?.role === 0
@@ -59,7 +59,7 @@ export default function DetectList({ thisRoom }: RoomProps) {
       </div>
       <button
         onClick={() => handleFinished(selected)}
-        className="border-2 border-primaryText rounded p-2 cursor-pointer hover:bg-secondaryBg"
+        className="border border-terminalFg text-terminalFg hover:text-black hover:bg-terminalAccent px-4 py-2 transition-all duration-150 font-mono cursor-pointer"
       >
         Finish detecting
       </button>

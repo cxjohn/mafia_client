@@ -37,28 +37,28 @@ export default function RoleCounter({
 
   return (
     <div className="flex items-center h-10 w-60 mx-auto mb-1">
-      <label className="w-full text-sm font-semibold">{role.label}</label>
-      <div className="flex flex-row h-10 w-32 rounded-lg relative bg-transparent mt-1">
+      <label className="w-full text-sm font-mono text-terminalFg">{role.label}</label>
+      <div className="flex flex-row h-10 w-32 relative bg-transparent mt-1 border border-terminalAccent">
         <button
           onClick={() => handleCount("decrement", role.id)}
-          className={`h-full w-20 rounded-l cursor-pointer outline-none ${
-            decrementDisabled ? "bg-secondaryBg" : "bg-secondaryText "
-          }`}
+          className={`h-full w-20 border-r border-terminalAccent cursor-pointer outline-none text-terminalFg font-mono ${
+            decrementDisabled ? "bg-black opacity-50" : "bg-black hover:bg-terminalAccent hover:text-black"
+          } transition-all duration-150`}
           disabled={decrementDisabled}
         >
-          <span className="m-auto text-2xl font-thin">−</span>
+          <span className="m-auto text-2xl">−</span>
         </button>
-        <span className="outline-none focus:outline-none text-center w-full bg-secondaryText font-semibold text-md  md:text-basecursor-default  text-primaryText">
+        <span className="outline-none focus:outline-none text-center w-full bg-black font-mono text-md md:text-base cursor-default text-terminalFg border-r border-terminalAccent">
           {role.count}
         </span>
         <button
           onClick={() => handleCount("increment", role.id)}
-          className={` h-full w-20 rounded-r cursor-pointer
-          ${incrementDisabled ? "bg-secondaryBg" : "bg-secondaryText "}
-          `}
+          className={`h-full w-20 cursor-pointer text-terminalFg font-mono ${
+            incrementDisabled ? "bg-black opacity-50" : "bg-black hover:bg-terminalAccent hover:text-black"
+          } transition-all duration-150`}
           disabled={incrementDisabled}
         >
-          <span className="m-auto text-2xl font-thin">+</span>
+          <span className="m-auto text-2xl">+</span>
         </button>
       </div>
     </div>

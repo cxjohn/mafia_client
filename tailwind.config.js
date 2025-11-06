@@ -2,25 +2,35 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    // colors: {
-    //   primaryBg: "#242F40",
-    //   secondaryBg: "#363636",
-    //   primaryText: "#FFFFFF",
-    //   secondaryText: "#CCA43B",
-    //   white: "#FFFFFF",
-    //   black: "#000000",
-    //   red: "#FF0000",
-    // },
     colors: {
-      primaryBg: "#1B263B",
-      secondaryBg: "#0D1B2A",
-      primaryText: "#E0E1DD",
-      secondaryText: "#415A77",
-      white: "#FFFFFF",
-      black: "#000000",
-      red: "#FF0000",
+      terminalBg: '#000000',
+      terminalFg: '#00FF66',
+      terminalFgDim: '#33CC66',
+      terminalAlert: '#FF0033',
+      terminalWarning: '#FFFF66',
+      terminalAccent: '#00CC44',
+      black: '#000000',
+      white: '#FFFFFF',
     },
-    extend: {},
+    fontFamily: {
+      mono: ['"VT323"', '"Share Tech Mono"', 'Courier New', 'monospace'],
+    },
+    extend: {
+      keyframes: {
+        blink: {
+          '0%, 50%, 100%': { opacity: '1' },
+          '25%, 75%': { opacity: '0' },
+        },
+        flicker: {
+          '0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%': { opacity: '0.99' },
+          '20%, 24%, 55%': { opacity: '0.4' },
+        },
+      },
+      animation: {
+        blink: 'blink 1s infinite step-start',
+        flicker: 'flicker 2s infinite',
+      },
+    },
   },
   plugins: [],
 };

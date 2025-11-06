@@ -25,11 +25,11 @@ export default function Conclusion({ thisRoom, setThisRoom }: ConclusionProps) {
   };
 
   return (
-    <div className="flex flex-col justify-between h-[75vh]">
-      <div>{mafiaWin ? "Mafia" : "Townspeople"} win!</div>
+    <div className="flex flex-col justify-between h-[75vh] text-terminalFg font-mono">
+      <div className="text-4xl text-terminalAccent animate-flicker">{mafiaWin ? "Mafia" : "Townspeople"} win!</div>
       <button
         onClick={handleLeave}
-        className="border-2 border-primaryText rounded p-2 cursor-pointer "
+        className="border border-terminalFg text-terminalFg hover:text-black hover:bg-terminalAccent px-4 py-2 transition-all duration-150 font-mono cursor-pointer"
       >
         Leave
       </button>

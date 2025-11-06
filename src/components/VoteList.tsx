@@ -29,16 +29,16 @@ export default function VoteList({ thisRoom }: RoomProps) {
                         ]
                       )
                     }
-                    className={`text-xl p-4 border border-primaryText w-full ${
-                      !clicked ? "hover:bg-secondaryBg" : ""
+                    className={`text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full ${
+                      !clicked ? "hover:bg-terminalAccent hover:text-black" : ""
                     } ${
                       selected ===
                       Object.keys(Object.fromEntries(thisRoom.state.players))[
                         idx
                       ]
-                        ? "bg-secondaryBg"
+                        ? "bg-terminalAccent text-black"
                         : ""
-                    } `}
+                    } transition-all duration-150`}
                     disabled={clicked}
                   >
                     {session.name}
