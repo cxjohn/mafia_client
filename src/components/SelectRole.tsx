@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { RoomProps, RolesType } from "../types";
+import { RolesType } from "../types";
 import RoleCounter from "./RoleSelection/RoleCounter";
 
-interface SelectRoleProps extends RoomProps {
+type SelectRoleProps = {
   rolesArray: RolesType[];
   setRolesArray: React.Dispatch<React.SetStateAction<RolesType[]>>;
 }
 
 export default function SelectRole({
-  thisRoom,
   rolesArray,
   setRolesArray,
 }: SelectRoleProps) {
@@ -53,7 +52,6 @@ export default function SelectRole({
         return (
           <div key={idx}>
             <RoleCounter
-              thisRoom={thisRoom}
               role={role}
               handleCount={handleCount}
               totalCount={totalCount}

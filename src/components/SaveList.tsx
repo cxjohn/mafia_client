@@ -1,36 +1,30 @@
-import { RoomProps } from "../types";
+import { useGame } from "../GameContext";
+import { Role } from "../types/Player";
 
-export default function SaveList({ thisRoom }: RoomProps) {
+export default function SaveList() {
+  const game = useGame();
+
   const handleSave = (target: string) => {
-    thisRoom?.send("selectSaved", target);
+    game.send("selectSaved", target);
   };
+
   return (
     <ul className="my-8">
-      {thisRoom &&
-        Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
-          (session, idx) => {
-            if (session.role !== 2 && session.alive) {
-              return (
-                <li key={idx}>
-                  <button
-                    onClick={() =>
-                      handleSave(
-                        Object.keys(Object.fromEntries(thisRoom.state.players))[
-                          idx
-                        ]
-                      )
-                    }
-                    className="text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full hover:bg-terminalAccent hover:text-black transition-all duration-150"
-                  >
-                    {session.name}
-                  </button>
-                </li>
-              );
-            } else {
-              return null;
-            }
-          }
-        )}
+      {Array.from(game.players.entries()).map(([sessionId, player]) => {
+        if (player.role !== Role.ANGEL && player.alive) {
+          return (
+            <li key={sessionId}>
+              <button
+                onClick={() => handleSave(sessionId)}
+                className="text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full hover:bg-terminalAccent hover:text-black transition-all duration-150"
+              >
+                {player.name}
+              </button>
+            </li>
+          );
+        }
+        return null;
+      })}
     </ul>
   );
 }

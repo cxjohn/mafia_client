@@ -1,36 +1,30 @@
-import { RoomProps } from "../types";
+import { useGame } from "../GameContext";
+import { Role } from "../types/Player";
 
-export default function WhackList({ thisRoom }: RoomProps) {
+export default function WhackList() {
+  const game = useGame();
+
   const handleWhack = (target: string) => {
-    thisRoom?.send("voteForWhack", target);
+    game.send("voteForWhack", target);
   };
+
   return (
     <ul className="my-8">
-      {thisRoom &&
-        Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
-          (session, idx) => {
-            if (session.role !== 0 && session.alive) {
-              return (
-                <li key={idx}>
-                  <button
-                    onClick={() =>
-                      handleWhack(
-                        Object.keys(Object.fromEntries(thisRoom.state.players))[
-                          idx
-                        ]
-                      )
-                    }
-                    className="text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full hover:bg-terminalAccent hover:text-black transition-all duration-150"
-                  >
-                    {session.name}
-                  </button>
-                </li>
-              );
-            } else {
-              return null;
-            }
-          }
-        )}
+      {Array.from(game.players.entries()).map(([sessionId, player]) => {
+        if (player.role !== Role.MAFIA && player.alive) {
+          return (
+            <li key={sessionId}>
+              <button
+                onClick={() => handleWhack(sessionId)}
+                className="text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full hover:bg-terminalAccent hover:text-black transition-all duration-150"
+              >
+                {player.name}
+              </button>
+            </li>
+          );
+        }
+        return null;
+      })}
     </ul>
   );
 }
