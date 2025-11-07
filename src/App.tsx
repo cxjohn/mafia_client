@@ -16,11 +16,11 @@ import { PhaseType } from "./types";
 import type { RoomType, RolesType } from "./types";
 
 // prod server
-// const client = new Colyseus.Client("wss://t7y27k.us-east-vin.colyseus.net");
+const client = new Colyseus.Client("wss://149-28-229-164.colyseus.dev");
 
 //dev server
-var host = window.location.host.replace(/:.*/, "");
-var client = new Colyseus.Client(`ws://${host}:2567`);
+// var host = window.location.host.replace(/:.*/, "");
+// var client = new Colyseus.Client(`ws://${host}:2567`);
 
 const roles: RolesType[] = [
   { label: "Mafia", id: 0, count: 0 },
