@@ -101,14 +101,28 @@ export default function App() {
 
   async function createRoom(name: string) {
     try {
-      const room: RoomType = await client.joinOrCreate<State>("my_room", {
+      const room: RoomType = await client.create<State>("my_room", {
         name,
       });
       setThisRoom(room);
       setupRoom(room);
-      console.log("room", room);
+      console.log("room created", room);
     } catch (e) {
-      console.error("join error", e);
+      console.error("create room error", e);
+    }
+  }
+
+  async function joinRoom(roomId: string, name: string) {
+    try {
+      const room: RoomType = await client.joinById<State>(roomId, {
+        name,
+      });
+      setThisRoom(room);
+      setupRoom(room);
+      console.log("room joined", room);
+    } catch (e) {
+      console.error("join room error", e);
+      throw e; // Re-throw to allow UI to handle error
     }
   }
 
@@ -150,11 +164,24 @@ export default function App() {
     [rolesArray]
   );
 
-  const handleCreateOrJoin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateRoom = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (name) {
       createRoom(name);
       setName("");
+    }
+  };
+
+  const handleJoinRoom = async (e: React.FormEvent<HTMLFormElement>, roomId: string) => {
+    e.preventDefault();
+    if (name && roomId) {
+      try {
+        await joinRoom(roomId, name);
+        setName("");
+      } catch (error) {
+        // Error handling will be done in JoinRoom component
+        throw error;
+      }
     }
   };
 
@@ -213,11 +240,26 @@ export default function App() {
       )}
       {!thisRoom && (
         <JoinRoom
-          handleCreateOrJoin={handleCreateOrJoin}
+          handleCreateRoom={handleCreateRoom}
+          handleJoinRoom={handleJoinRoom}
           name={name}
           setName={setName}
           handleReconnect={handleReconnect}
         />
+      )}
+      {thisRoom && (
+        <div className="fixed top-4 right-4 bg-black border border-terminalAccent px-4 py-2 font-mono text-terminalFg text-sm">
+          <div className="text-terminalAccent mb-1">Room Code:</div>
+          <div className="text-lg font-bold">{thisRoom.id}</div>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(thisRoom.id);
+            }}
+            className="mt-2 text-xs text-terminalAccent hover:underline"
+          >
+            Copy
+          </button>
+        </div>
       )}
     </div>
   );
