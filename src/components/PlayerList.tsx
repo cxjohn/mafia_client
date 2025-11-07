@@ -1,27 +1,22 @@
-import { RoomProps } from "../types";
+import { useGame } from "../GameContext";
 
-export default function PlayerList({ thisRoom }: RoomProps) {
+export default function PlayerList() {
+  const game = useGame();
+
   return (
-    <ol>
-      {thisRoom &&
-        Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
-          (session, idx) => {
-            return (
-              <li
-                className={`text-xl text-left list-decimal list-inside ${
-                  Object.keys(Object.fromEntries(thisRoom.state.players))[
-                    idx
-                  ] === thisRoom.sessionId
-                    ? "text-secondaryText"
-                    : "text-primaryText"
-                } ${session.alive ? "" : "line-through"}`}
-                key={idx}
-              >
-                {session.name}
-              </li>
-            );
-          }
-        )}
+    <ol className="text-terminalFg font-mono">
+      {Array.from(game.players.entries()).map(([sessionId, player]) => (
+        <li
+          className={`text-xl text-left list-decimal list-inside ${
+            sessionId === game.sessionId
+              ? "text-terminalAccent"
+              : "text-terminalFg"
+          } ${player.alive ? "" : "line-through text-terminalFgDim"}`}
+          key={sessionId}
+        >
+          {player.name}
+        </li>
+      ))}
     </ol>
   );
 }

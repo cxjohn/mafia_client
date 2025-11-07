@@ -8,15 +8,17 @@
 import {
   Schema,
   type,
-  ArraySchema,
-  MapSchema,
-  SetSchema,
-  DataChange,
+  // ArraySchema,
+  // MapSchema,
+  // SetSchema,
+  // DataChange,
 } from "@colyseus/schema";
 
 export enum Role {
   MAFIA = 0,
   TOWNSPERSON = 1,
+  ANGEL = 2,
+  DETECTIVE = 3,
 }
 
 export class Player extends Schema {

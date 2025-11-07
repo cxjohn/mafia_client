@@ -1,24 +1,25 @@
 import TitleText from "../TitleText";
-import { RoomType } from "../../types";
+import { useGame } from "../../GameContext";
 
 enum Role {
   "Mafia",
   "Townsperson",
+  "Angel",
+  "Detective",
 }
 
-type IntroProps = {
-  narration: string;
-  thisRoom: RoomType;
-};
+export default function Introduction() {
+  const game = useGame();
+  const currentPlayer = game.players.get(game.sessionId);
 
-export default function Introduction({ narration, thisRoom }: IntroProps) {
   return (
     <>
       <TitleText text="Mafia!" />
-      <p className="text-left py-12">{narration}</p>
-      <p className="text-secondaryText mt-12">
-        You are a {/* @ts-ignore */}
-        {Role[thisRoom && thisRoom.state.players[thisRoom.sessionId]?.role]}
+      <p className="text-left py-12 text-terminalFg font-mono">
+        {game.narration}
+      </p>
+      <p className="text-terminalAccent mt-12 font-mono">
+        You are a {Role[currentPlayer?.role ?? 0]}
       </p>
     </>
   );

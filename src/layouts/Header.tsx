@@ -1,7 +1,7 @@
 export default function Header() {
   return (
-    <div className="flex justify-center align-baseline bg-secondaryBg p-4">
-      <h1 className="text-6xl">Mafia</h1>
-    </div>
+    <header className="bg-black text-terminalFg text-4xl font-mono p-4 text-center border-b border-terminalAccent tracking-widest">
+      <span className="text-terminalAccent">mafia@darknet</span>:~$ Mafia.exe
+    </header>
   );
 }

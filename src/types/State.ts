@@ -14,7 +14,7 @@ import {
   DataChange,
 } from "@colyseus/schema";
 import { Player } from "./Player";
-import { PhaseType } from "../components/Phase";
+import { PhaseType } from "../types";
 
 export class State extends Schema {
   @type("number") public minClients!: number;

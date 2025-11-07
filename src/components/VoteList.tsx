@@ -1,55 +1,39 @@
 import { useState } from "react";
-import { RoomProps } from "../types";
+import { useGame } from "../GameContext";
 
-export default function VoteList({ thisRoom }: RoomProps) {
+export default function VoteList() {
+  const game = useGame();
   const [clicked, setClicked] = useState(false);
   const [selected, setSelected] = useState("");
+
   const handleVote = (target: string) => {
     setClicked(true);
     setSelected(target);
-    thisRoom.send("voteForLynch", target);
+    game.send("voteForLynch", target);
   };
+
   return (
     <ul className="my-8">
-      {thisRoom &&
-        Object.values(Object.fromEntries(thisRoom.state.players["$items"])).map(
-          (session, idx) => {
-            if (
-              Object.keys(Object.fromEntries(thisRoom.state.players))[idx] !==
-                thisRoom.sessionId &&
-              session.alive
-            ) {
-              return (
-                <li key={idx}>
-                  <button
-                    onClick={() =>
-                      handleVote(
-                        Object.keys(Object.fromEntries(thisRoom.state.players))[
-                          idx
-                        ]
-                      )
-                    }
-                    className={`text-xl p-4 border border-primaryText w-full ${
-                      !clicked ? "hover:bg-secondaryBg" : ""
-                    } ${
-                      selected ===
-                      Object.keys(Object.fromEntries(thisRoom.state.players))[
-                        idx
-                      ]
-                        ? "bg-secondaryBg"
-                        : ""
-                    } `}
-                    disabled={clicked}
-                  >
-                    {session.name}
-                  </button>
-                </li>
-              );
-            } else {
-              return null;
-            }
-          }
-        )}
+      {Array.from(game.players.entries()).map(([sessionId, player]) => {
+        if (sessionId !== game.sessionId && player.alive) {
+          return (
+            <li key={sessionId}>
+              <button
+                onClick={() => handleVote(sessionId)}
+                className={`text-xl p-4 border border-terminalAccent text-terminalFg font-mono w-full ${
+                  !clicked ? "hover:bg-terminalAccent hover:text-black" : ""
+                } ${
+                  selected === sessionId ? "bg-terminalAccent text-black" : ""
+                } transition-all duration-150`}
+                disabled={clicked}
+              >
+                {player.name}
+              </button>
+            </li>
+          );
+        }
+        return null;
+      })}
     </ul>
   );
 }
