@@ -27,6 +27,7 @@ export default function InfoModal({
 
   const handleDispose = () => {
     game.send("kill");
+    window.location.reload();
   };
 
   return (
