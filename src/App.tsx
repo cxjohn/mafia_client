@@ -247,20 +247,6 @@ export default function App() {
           handleReconnect={handleReconnect}
         />
       )}
-      {thisRoom && (
-        <div className="fixed top-4 right-4 bg-black border border-terminalAccent px-4 py-2 font-mono text-terminalFg text-sm">
-          <div className="text-terminalAccent mb-1">Room Code:</div>
-          <div className="text-lg font-bold">{thisRoom.id}</div>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(thisRoom.id);
-            }}
-            className="mt-2 text-xs text-terminalAccent hover:underline"
-          >
-            Copy
-          </button>
-        </div>
-      )}
     </div>
   );
 }
