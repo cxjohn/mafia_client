@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+# Mafia Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, real-time multiplayer client for the classic social deduction game **Mafia** (also known as Werewolf).
 
-## Available Scripts
+## Hosted Site
 
-In the project directory, you can run:
+[https://mafia-client.vercel.app/](https://mafia-client.vercel.app/)
 
-### `npm start`
+## About the Game
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This application allows players to join a room and play Mafia in real-time. Players are assigned secret roles and must work together (or deceptively) to achieve their team's objective. The game cycles through Day and Night phases where players discuss, vote, and perform special actions based on their roles.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Roles
 
-### `npm test`
+*   **Mafia**: The villains. They wake up at night to choose a victim to eliminate. Their goal is to equal or outnumber the townspeople.
+*   **Townsperson**: The innocent majority. They must find and eliminate the Mafia during the day phases.
+*   **Angel**: A special role that can protect one player from being eliminated by the Mafia at night.
+*   **Detective**: A special role that can investigate one player at night to learn their alignment.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Game Phases
 
-### `npm run build`
+1.  **Lobby**: Players join the room and the host starts the game.
+2.  **Introduction**: Roles are assigned and the game begins.
+3.  **Night**: Special roles (Mafia, Angel, Detective) perform their actions.
+4.  **Narration (Morning)**: The results of the night interactions are revealed.
+5.  **Voting**: Players discuss and vote on who to eliminate (lynch) from the game.
+6.  **Conclusion**: The game ends when one faction wins.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+*   **Frontend**: React with TypeScript
+*   **Styling**: Tailwind CSS
+*   **Networking**: Colyseus.js (WebSocket-based multiplayer)
