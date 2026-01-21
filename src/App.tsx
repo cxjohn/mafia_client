@@ -16,11 +16,11 @@ import { PhaseType } from "./types";
 import type { RoomType, RolesType } from "./types";
 
 // prod server
-const client = new Colyseus.Client("wss://149-28-229-164.colyseus.dev");
+// const client = new Colyseus.Client("wss://149-28-229-164.colyseus.dev");
 
 //dev server
-// var host = window.location.host.replace(/:.*/, "");
-// var client = new Colyseus.Client(`ws://${host}:2567`);
+var host = window.location.host.replace(/:.*/, "");
+var client = new Colyseus.Client(`ws://${host}:2567`);
 
 const roles: RolesType[] = [
   { label: "Mafia", id: 0, count: 0 },
@@ -246,20 +246,6 @@ export default function App() {
           setName={setName}
           handleReconnect={handleReconnect}
         />
-      )}
-      {thisRoom && (
-        <div className="fixed top-4 right-4 bg-black border border-terminalAccent px-4 py-2 font-mono text-terminalFg text-sm">
-          <div className="text-terminalAccent mb-1">Room Code:</div>
-          <div className="text-lg font-bold">{thisRoom.id}</div>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(thisRoom.id);
-            }}
-            className="mt-2 text-xs text-terminalAccent hover:underline"
-          >
-            Copy
-          </button>
-        </div>
       )}
     </div>
   );

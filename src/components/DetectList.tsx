@@ -6,6 +6,7 @@ export default function DetectList() {
   const game = useGame();
   const [clicked, setClicked] = useState(false);
   const [selected, setSelected] = useState("");
+  const [finished, setFinished] = useState(false);
 
   const handleSelected = (target: string) => {
     setClicked(true);
@@ -14,6 +15,7 @@ export default function DetectList() {
 
   const handleFinished = (target: string) => {
     game.send("detectiveFinished", target);
+    setFinished(true);
   };
 
   const selectedPlayer = selected ? game.players.get(selected) : null;
@@ -50,7 +52,8 @@ export default function DetectList() {
       </div>
       <button
         onClick={() => handleFinished(selected)}
-        className="border border-terminalFg text-terminalFg hover:text-black hover:bg-terminalAccent px-4 py-2 transition-all duration-150 font-mono cursor-pointer"
+        className={`border border-terminalFg text-terminalFg hover:text-black hover:bg-terminalAccent px-4 py-2 transition-all duration-150 font-mono ${finished ? "bg-terminalAccent text-black" : "cursor-pointer"}`}
+        disabled={finished}
       >
         Finish detecting
       </button>
